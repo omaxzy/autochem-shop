@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - AutoChem</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem;
+        }
+        .auth-container { 
+            background: white; border-radius: 20px; padding: 2rem; 
+            max-width: 400px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center;
+        }
+        h1 { color: #1a1a2e; margin-bottom: 0.3rem; font-size: 1.5rem; }
+        .subtitle { color: #999; margin-bottom: 1.5rem; font-size: 0.85rem; }
+        .form-group { margin-bottom: 1rem; text-align: left; }
+        label { display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.85rem; }
+        input { width: 100%; padding: 0.7rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.9rem; }
+        input:focus { outline: none; border-color: #667eea; }
+        .btn-submit { 
+            background: #4CAF50; color: white; border: none; padding: 0.8rem; 
+            border-radius: 10px; font-size: 1rem; cursor: pointer; width: 100%; font-weight: 600;
+        }
+        .btn-submit:hover { background: #45a049; }
+        .link { display: block; margin-top: 1rem; color: #667eea; text-decoration: none; font-size: 0.85rem; }
+        .flash { padding: 0.6rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.85rem; }
+        .flash.error { background: #f8d7da; color: #721c24; }
+        .back-link { display: block; margin-top: 0.5rem; color: #999; text-decoration: none; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h1>📝 Регистрация</h1>
+        <p class="subtitle">Создайте аккаунт для заказов</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label>Придумайте логин</label>
+                <input type="text" name="username" required placeholder="Логин">
+            </div>
+            <div class="form-group">
+                <label>Придумайте пароль</label>
+                <input type="password" name="password" required placeholder="Минимум 4 символа">
+            </div>
+            <button type="submit" class="btn-submit">Зарегистрироваться</button>
+        </form>
+        <a href="/login" class="link">Уже есть аккаунт? Войти</a>
+        <a href="/" class="back-link">← На главную</a>
+    </div>
+</body>
+</html>

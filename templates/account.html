@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - AutoChem</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #f5f5f5; min-height: 100vh;
+        }
+        .header { 
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
+            color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center;
+        }
+        .header h1 { font-size: 1.3rem; }
+        .header a { color: white; text-decoration: none; font-size: 0.85rem; }
+        .container { max-width: 800px; margin: 1.5rem auto; padding: 0 1rem; }
+        .card { 
+            background: white; border-radius: 12px; padding: 1.5rem; 
+            margin-bottom: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .card h2 { font-size: 1.1rem; margin-bottom: 1rem; color: #1a1a2e; }
+        .order { 
+            border: 1px solid #e0e0e0; border-radius: 10px; padding: 1rem; 
+            margin-bottom: 0.8rem;
+        }
+        .order-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem; }
+        .order-status { 
+            padding: 0.2rem 0.6rem; border-radius: 15px; font-size: 0.75rem; 
+            font-weight: bold;
+        }
+        .status-new { background: #fff3cd; color: #856404; }
+        .status-processing { background: #cce5ff; color: #004085; }
+        .status-done { background: #d4edda; color: #155724; }
+        .order-items { font-size: 0.85rem; color: #666; margin-bottom: 0.3rem; }
+        .order-total { font-weight: bold; color: #e94560; }
+        .no-orders { text-align: center; color: #999; padding: 1rem; }
+        .btn { 
+            display: inline-block; background: #e94560; color: white; padding: 0.5rem 1rem; 
+            border-radius: 20px; text-decoration: none; font-size: 0.85rem;
+        }
+        .flash { padding: 0.6rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; font-size: 0.85rem; }
+        .flash.success { background: #d4edda; color: #155724; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>👤 {{ user.username }}</h1>
+        <div>
+            <a href="/">🏠 Магазин</a> &nbsp; 
+            <a href="/logout">🚪 Выйти</a>
+        </div>
+    </div>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="card">
+            <h2>📦 Мои заказы</h2>
+            {% if orders %}
+                {% for order in orders %}
+                <div class="order">
+                    <div class="order-header">
+                        <span>📅 {{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</span>
+                        <span class="order-status status-{% if order.status == 'Новый' %}new{% elif order.status == 'В обработке' %}processing{% else %}done{% endif %}">
+                            {{ order.status }}
+                        </span>
+                    </div>
+                    <div class="order-items">{{ order.items }}</div>
+                    <div class="order-total">{{ "%.0f"|format(order.total_price) }} ₽</div>
+                    <div style="font-size:0.8rem; color:#999; margin-top:0.3rem;">Адрес: {{ order.address }}</div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="no-orders">У вас пока нет заказов</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

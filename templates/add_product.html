@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить товар - AutoChem</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 2rem;
+        }
+        
+        .form-container { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 2.5rem; 
+            max-width: 650px; 
+            width: 100%; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 { 
+            color: #1a1a2e; 
+            margin-bottom: 0.5rem; 
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        .subtitle {
+            text-align: center;
+            color: #999;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-group { margin-bottom: 1.3rem; }
+        label { 
+            display: block; 
+            margin-bottom: 0.4rem; 
+            font-weight: 600; 
+            color: #333;
+            font-size: 0.9rem;
+        }
+        .required::after { content: " *"; color: #e94560; }
+        
+        input, textarea, select { 
+            width: 100%; 
+            padding: 0.8rem 1rem; 
+            border: 2px solid #e0e0e0; 
+            border-radius: 10px; 
+            font-size: 1rem; 
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        input:focus, textarea:focus, select:focus { 
+            outline: none; 
+            border-color: #667eea; 
+        }
+        
+        textarea { min-height: 100px; resize: vertical; }
+        
+        .file-upload-container {
+            border: 2px dashed #d0d0d0;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+        .file-upload-container:hover { 
+            border-color: #667eea; 
+            background: #f0f0ff;
+        }
+        .file-upload-container input[type="file"] { display: none; }
+        .file-upload-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+        #file-name { color: #666; font-size: 0.9rem; margin-top: 0.5rem; }
+        
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        
+        .btn-submit { 
+            background: #4CAF50; 
+            color: white; 
+            border: none; 
+            padding: 1rem; 
+            border-radius: 10px; 
+            font-size: 1.1rem; 
+            cursor: pointer; 
+            width: 100%; 
+            font-weight: 600;
+            transition: background 0.3s;
+            margin-top: 0.5rem;
+        }
+        .btn-submit:hover { background: #45a049; }
+        
+        .back-link { 
+            display: block; 
+            text-align: center; 
+            margin-top: 1rem; 
+            color: #999; 
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .back-link:hover { color: #333; }
+        
+        .flash { 
+            padding: 0.8rem 1rem; 
+            border-radius: 8px; 
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        .flash.error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>➕ Добавить товар</h1>
+        <p class="subtitle">Заполните все поля для добавления нового товара</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="required">Название товара</label>
+                <input type="text" name="name" required placeholder="Например: Очиститель карбюратора">
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="required">Бренд</label>
+                    <input type="text" name="brand" required placeholder="Liqui Moly, Mannol...">
+                </div>
+                <div class="form-group">
+                    <label class="required">Объём</label>
+                    <input type="text" name="volume" required placeholder="500 мл, 1 л, 5 л...">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Категория</label>
+                <select name="category" required>
+                    <option value="">-- Выберите категорию --</option>
+                    <option value="Очистители">Очистители</option>
+                    <option value="Масла">Масла</option>
+                    <option value="Присадки">Присадки</option>
+                    <option value="Полироли">Полироли</option>
+                    <option value="Автошампуни">Автошампуни</option>
+                    <option value="Антифризы">Антифризы</option>
+                    <option value="Тормозные жидкости">Тормозные жидкости</option>
+                    <option value="Смазки">Смазки</option>
+                    <option value="Ароматизаторы">Ароматизаторы</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Цена (в рублях)</label>
+                <input type="number" name="price" step="0.01" required placeholder="599.99">
+            </div>
+
+            <div class="form-group">
+                <label class="required">Описание товара</label>
+                <textarea name="description" required placeholder="Подробное описание, характеристики, способ применения..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Фото товара</label>
+                <div class="file-upload-container" onclick="document.getElementById('image').click()">
+                    <input type="file" id="image" name="image" accept="image/*" required onchange="updateFileName(this)">
+                    <div class="file-upload-icon">📁</div>
+                    <p>Нажмите для выбора фото</p>
+                    <p id="file-name" style="margin-top: 0.5rem;">Файл не выбран</p>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">✅ Добавить товар</button>
+        </form>
+
+        <a href="/admin" class="back-link">← Вернуться в админ-панель</a>
+    </div>
+
+    <script>
+        function updateFileName(input) {
+            const fileName = input.files[0]?.name || 'Файл не выбран';
+            document.getElementById('file-name').textContent = '📷 ' + fileName;
+        }
+    </script>
+</body>
+</html>

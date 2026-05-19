@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoChem - Магазин автомобильной химии</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        
+        .header { 
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
+            color: white; padding: 1rem; display: flex; 
+            justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 200;
+        }
+        .header-left h1 { font-size: 1.5rem; }
+        .header-left p { font-size: 0.8rem; opacity: 0.8; }
+        
+        .cart-icon { 
+            position: relative; background: white; color: #1a1a2e; 
+            width: 45px; height: 45px; border-radius: 50%; display: flex; 
+            align-items: center; justify-content: center; cursor: pointer;
+            font-size: 1.3rem; text-decoration: none;
+        }
+        .cart-count { 
+            position: absolute; top: -5px; right: -5px; 
+            background: #e94560; color: white; width: 22px; height: 22px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; font-weight: bold;
+        }
+        
+        .nav { 
+            background: white; padding: 0.8rem; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky; top: 60px; z-index: 100;
+        }
+        .search-form { display: flex; gap: 0.3rem; margin-bottom: 0.8rem; }
+        .search-input { 
+            flex: 1; padding: 0.6rem 1rem; border: 2px solid #e0e0e0; 
+            border-radius: 25px; font-size: 0.9rem;
+        }
+        .search-input:focus { outline: none; border-color: #e94560; }
+        .search-btn { 
+            background: #e94560; color: white; border: none; 
+            padding: 0.6rem 1rem; border-radius: 25px; cursor: pointer; font-size: 0.9rem;
+        }
+        
+        .categories { 
+            display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.3rem;
+            -webkit-overflow-scrolling: touch; scrollbar-width: none;
+        }
+        .categories::-webkit-scrollbar { display: none; }
+        .category-btn { 
+            background: #f0f0f0; color: #333; padding: 0.4rem 0.9rem; 
+            border-radius: 20px; text-decoration: none; font-size: 0.8rem; 
+            white-space: nowrap; flex-shrink: 0;
+        }
+        .category-btn:hover, .category-btn.active { background: #e94560; color: white; }
+        
+        .container { max-width: 1300px; margin: 1rem auto; padding: 0 0.8rem; }
+        .section-title { font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 3px solid #e94560; display: inline-block; padding-bottom: 0.3rem; }
+        
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+        
+        .product-card { 
+            background: white; border-radius: 12px; overflow: hidden; 
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08); transition: transform 0.3s;
+        }
+        .product-card:hover { transform: translateY(-5px); }
+        
+        .product-image-container { position: relative; height: 200px; background: #f8f8f8; }
+        .product-image { width: 100%; height: 100%; object-fit: cover; }
+        .product-category-badge {
+            position: absolute; top: 0.5rem; left: 0.5rem;
+            background: rgba(233, 69, 96, 0.9); color: white;
+            padding: 0.2rem 0.6rem; border-radius: 15px; font-size: 0.7rem;
+        }
+        
+        .product-info { padding: 1rem; }
+        .product-name { font-size: 1rem; font-weight: bold; color: #1a1a2e; margin-bottom: 0.3rem; }
+        .product-meta { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.75rem; color: #666; }
+        .product-meta span { background: #f5f5f5; padding: 0.2rem 0.5rem; border-radius: 10px; }
+        .product-description { color: #777; font-size: 0.8rem; margin-bottom: 0.8rem; }
+        .product-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f0f0f0; padding-top: 0.8rem; }
+        .product-price { font-size: 1.3rem; font-weight: bold; color: #e94560; }
+        .product-price small { font-size: 0.8rem; color: #999; }
+        .add-to-cart { 
+            background: #e94560; color: white; border: none; 
+            padding: 0.6rem 1rem; border-radius: 25px; cursor: pointer; font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        .add-to-cart:hover { background: #c73e56; transform: scale(1.05); }
+        .add-to-cart.added { background: #4CAF50; }
+        
+        .no-products { text-align: center; padding: 3rem; background: white; border-radius: 12px; color: #999; }
+        
+        .admin-link { 
+            position: fixed; bottom: 1.5rem; right: 1rem; 
+            background: #1a1a2e; color: white; padding: 0.7rem 1.2rem; 
+            border-radius: 50px; text-decoration: none; box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            font-size: 0.8rem; z-index: 100;
+        }
+        
+        /* Выезжающая корзина */
+        .cart-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.5); z-index: 300; display: none;
+        }
+        .cart-overlay.open { display: block; }
+        
+        .cart-panel { 
+            position: fixed; top: 0; right: -400px; width: 380px; max-width: 90vw; height: 100%; 
+            background: white; z-index: 301; transition: right 0.3s; 
+            display: flex; flex-direction: column; box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+        }
+        .cart-panel.open { right: 0; }
+        
+        .cart-header { 
+            padding: 1rem; background: #1a1a2e; color: white; 
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .cart-close { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        
+        .cart-items { flex: 1; overflow-y: auto; padding: 1rem; }
+        .cart-item { 
+            display: flex; gap: 0.8rem; padding: 0.8rem 0; border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        .cart-item-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+        .cart-item-info { flex: 1; }
+        .cart-item-name { font-weight: bold; font-size: 0.9rem; }
+        .cart-item-price { color: #e94560; font-weight: bold; margin-top: 0.3rem; }
+        .cart-item-controls { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; }
+        .cart-qty-btn { 
+            width: 28px; height: 28px; border-radius: 50%; border: 1px solid #ddd; 
+            background: white; cursor: pointer; font-size: 1rem; display: flex;
+            align-items: center; justify-content: center;
+        }
+        .cart-qty { font-weight: bold; min-width: 20px; text-align: center; }
+        .cart-item-remove { color: #f44336; cursor: pointer; font-size: 0.8rem; background: none; border: none; }
+        
+        .cart-footer { padding: 1rem; border-top: 2px solid #eee; }
+        .cart-total { font-size: 1.2rem; font-weight: bold; margin-bottom: 0.8rem; }
+        .cart-checkout-btn { 
+            width: 100%; padding: 0.8rem; background: #e94560; color: white; 
+            border: none; border-radius: 10px; font-size: 1rem; cursor: pointer;
+        }
+        .cart-empty { text-align: center; padding: 2rem; color: #999; }
+        
+        .notification {
+            position: fixed; top: 20px; right: 20px; background: #4CAF50; color: white;
+            padding: 1rem 1.5rem; border-radius: 10px; z-index: 400;
+            transform: translateX(120%); transition: transform 0.3s;
+        }
+        .notification.show { transform: translateX(0); }
+
+        @media (max-width: 600px) {
+            .products-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+            .product-image-container { height: 140px; }
+            .product-info { padding: 0.7rem; }
+            .product-name { font-size: 0.85rem; }
+            .product-description { display: none; }
+            .product-price { font-size: 1rem; }
+            .add-to-cart { padding: 0.5rem 0.7rem; font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <h1>🚗 AutoChem</h1>
+            <p>Автомобильная химия</p>
+        </div>
+        <div class="cart-icon" onclick="toggleCart()">
+            🛒
+            <span class="cart-count" id="cart-count">0</span>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <form class="search-form" action="/search" method="GET">
+            <input type="text" name="q" class="search-input" placeholder="🔍 Поиск..." value="{{ search_query or '' }}">
+            <button type="submit" class="search-btn">Найти</button>
+        </form>
+        <div class="categories">
+            <a href="/" class="category-btn {% if not current_category %}active{% endif %}">Все</a>
+            {% for category in categories %}
+            <a href="/category/{{ category }}" class="category-btn {% if current_category == category %}active{% endif %}">{{ category }}</a>
+            {% endfor %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if products %}
+            <h2 class="section-title">{% if search_query %}Поиск: "{{ search_query }}"{% elif current_category %}{{ current_category }}{% else %}Товары{% endif %}</h2>
+            <div class="products-grid">
+                {% for product in products %}
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="{{ url_for('uploaded_file', filename=product.image) }}" alt="{{ product.name }}" class="product-image">
+                        <span class="product-category-badge">{{ product.category }}</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">{{ product.name }}</h3>
+                        <div class="product-meta">
+                            <span>🏭 {{ product.brand }}</span>
+                            <span>📦 {{ product.volume }}</span>
+                        </div>
+                        <p class="product-description">{{ product.description[:120] }}{% if product.description|length > 120 %}...{% endif %}</p>
+                        <div class="product-footer">
+                            <span class="product-price">{{ "%.0f"|format(product.price) }} <small>₽</small></span>
+                            <button class="add-to-cart" onclick="addToCart({{ product.id }}, '{{ product.name }}', {{ product.price }}, '{{ product.image }}')">
+                                🛒 В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-products"><h2>😔 Товары не найдены</h2></div>
+        {% endif %}
+    </div>
+
+    <!-- Корзина -->
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <div class="cart-panel" id="cart-panel">
+        <div class="cart-header">
+            <h3>🛒 Корзина</h3>
+            <button class="cart-close" onclick="toggleCart()">✕</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="cart-empty">Корзина пуста</div>
+        </div>
+        <div class="cart-footer" id="cart-footer" style="display:none;">
+            <div class="cart-total">Итого: <span id="cart-total">0</span> ₽</div>
+            <button class="cart-checkout-btn" onclick="alert('Оформление заказа скоро будет добавлено!')">Оформить заказ</button>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">✅ Добавлено в корзину</div>
+
+    <a href="/admin" class="admin-link">⚙️ Админ-панель</a>
+
+    <script>
+        // Корзина
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+        
+        function addToCart(id, name, price, image) {
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ id, name, price, image, qty: 1 });
+            }
+            saveCart();
+            showNotification('✅ Добавлено в корзину');
+            
+            // Анимация кнопки
+            const btn = event.target;
+            btn.classList.add('added');
+            btn.textContent = '✅ Добавлено';
+            setTimeout(() => {
+                btn.classList.remove('added');
+                btn.textContent = '🛒 В корзину';
+            }, 1500);
+        }
+        
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            saveCart();
+        }
+        
+        function changeQty(id, delta) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    removeFromCart(id);
+                } else {
+                    saveCart();
+                }
+            }
+        }
+        
+        function updateCartUI() {
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cart-count').textContent = count;
+            
+            const cartItems = document.getElementById('cart-items');
+            const cartFooter = document.getElementById('cart-footer');
+            const cartTotal = document.getElementById('cart-total');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="cart-empty">Корзина пуста</div>';
+                cartFooter.style.display = 'none';
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <img src="/uploads/${item.image}" class="cart-item-img" alt="${item.name}">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">${item.price} ₽</div>
+                            <div class="cart-item-controls">
+                                <button class="cart-qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+                                <span class="cart-qty">${item.qty}</span>
+                                <button class="cart-qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                            </div>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart(${item.id})">🗑️</button>
+                    </div>
+                `).join('');
+                cartFooter.style.display = 'block';
+                const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+                cartTotal.textContent = total.toLocaleString();
+            }
+        }
+        
+        function toggleCart() {
+            document.getElementById('cart-panel').classList.toggle('open');
+            document.getElementById('cart-overlay').classList.toggle('open');
+        }
+        
+        function showNotification(text) {
+            const notif = document.getElementById('notification');
+            notif.textContent = text;
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 2000);
+        }
+        
+        updateCartUI();
+    </script>
+</body>
+</html>

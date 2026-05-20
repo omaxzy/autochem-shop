@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доставка и оплата - AutoChem</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 0.3rem; }
+        .logo img { width: 32px; height: 32px; }
+        .logo a { color: white; text-decoration: none; font-size: 1.2rem; font-weight: bold; }
+        .header-right { display: flex; gap: 0.8rem; align-items: center; }
+        .header-btn { color: white; text-decoration: none; padding: 0.4rem 0.8rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; font-size: 0.8rem; }
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: white; border-radius: 15px; padding: 2rem; box-shadow: 0 3px 15px rgba(0,0,0,0.08); }
+        .card h1 { font-size: 1.8rem; color: #1a1a2e; margin-bottom: 1.5rem; text-align: center; }
+        .card h2 { font-size: 1.1rem; color: #e94560; margin: 1.5rem 0 0.5rem; }
+        .card p, .card li { line-height: 1.7; color: #555; margin-bottom: 0.5rem; }
+        .card ul { margin-left: 1.5rem; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: #667eea; text-decoration: none; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="/"><img src="/static/icons/car.png" alt=""></a>
+            <a href="/">AutoChem</a>
+        </div>
+        <div class="header-right">
+            {% if session.user_id %}
+                <a href="/account" class="header-btn">{{ session.username }}</a>
+                <a href="/logout" class="header-btn">Выйти</a>
+            {% else %}
+                <a href="/login" class="header-btn">Войти</a>
+                <a href="/register" class="header-btn">Регистрация</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="/" class="back-link">← На главную</a>
+        <div class="card">
+            <h1>Доставка и оплата</h1>
+            
+            <h2>Способы доставки</h2>
+            <ul>
+                <li><strong>Курьерская доставка</strong> — от 1 до 3 рабочих дней, стоимость рассчитывается по тарифам службы доставки.</li>
+                <li><strong>Самовывоз</strong> — бесплатно, адрес уточняйте по телефону после оформления заказа.</li>
+                <li><strong>Почта России</strong> — для заказов в регионы, от 5 до 14 рабочих дней.</li>
+            </ul>
+            
+            <h2>Способы оплаты</h2>
+            <ul>
+                <li><strong>Наличными</strong> — при получении заказа курьеру или в пункте самовывоза.</li>
+                <li><strong>Банковской картой</strong> — онлайн при оформлении заказа (скоро).</li>
+                <li><strong>Переводом</strong> — по реквизитам, которые придут в SMS после подтверждения заказа.</li>
+            </ul>
+            
+            <h2>Сроки обработки</h2>
+            <p>Заказы обрабатываются ежедневно с 9:00 до 21:00. Заказ, оформленный после 21:00, обрабатывается на следующий день.</p>
+        </div>
+    </div>
+</body>
+</html>

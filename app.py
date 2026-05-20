@@ -294,7 +294,14 @@ def admin_panel():
     products = Product.query.order_by(Product.created_at.desc()).all()
     orders = Order.query.order_by(Order.created_at.desc()).all()
     users = User.query.all()
-    return render_template('admin.html', products=products, orders=orders, users=users)
+    
+    total_orders = len(orders)
+    total_revenue = sum(order.total_price for order in orders)
+    new_orders = len([o for o in orders if o.status == 'Новый'])
+    
+    return render_template('admin.html', 
+        products=products, orders=orders, users=users,
+        total_orders=total_orders, total_revenue=total_revenue, new_orders=new_orders)
 
 @app.route('/admin/add', methods=['GET', 'POST'])
 @admin_required

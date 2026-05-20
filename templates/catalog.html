@@ -66,6 +66,9 @@
         }
         .category-btn:hover, .category-btn.active { background: #e94560; color: white; }
         
+        .sort-bar { display: flex; gap: 0.3rem; margin-top: 0.5rem; align-items: center; }
+        .sort-bar span { font-size: 0.75rem; color: #999; }
+        
         .flash-messages { max-width: 1300px; margin: 0.5rem auto; padding: 0 0.8rem; }
         .flash { padding: 0.6rem 1rem; border-radius: 8px; margin-bottom: 0.3rem; font-size: 0.85rem; }
         .flash.success { background: #d4edda; color: #155724; }
@@ -131,21 +134,15 @@
             <a href="/">AutoChem</a>
         </div>
         <div class="header-right">
-           {% if session.user_id %}
-                <a href="/account" class="header-btn">
-                    <img src="/static/icons/profile.png" alt=""> {{ session.username }}
-                </a>
+            {% if session.user_id %}
+                <a href="/account" class="header-btn"><img src="/static/icons/profile.png" alt=""> {{ session.username }}</a>
                 {% if session.username == 'admin' %}
-                    <a href="/admin" class="header-btn">⚙️ Админ</a>
+                    <a href="/admin" class="header-btn"><img src="/static/icons/settings.png" alt=""> Админ</a>
                 {% endif %}
                 <a href="/logout" class="header-btn">Выйти</a>
             {% else %}
-                <a href="/login" class="header-btn">
-                    <img src="/static/icons/lock.png" alt=""> Войти
-                </a>
-                <a href="/register" class="header-btn">
-                    <img src="/static/icons/user.png" alt=""> Регистрация
-                </a>
+                <a href="/login" class="header-btn"><img src="/static/icons/lock.png" alt=""> Войти</a>
+                <a href="/register" class="header-btn"><img src="/static/icons/user.png" alt=""> Регистрация</a>
             {% endif %}
             <a href="/cart" class="cart-btn">
                 <img src="/static/icons/cart.png" alt="">
@@ -164,6 +161,12 @@
             {% for category in categories %}
             <a href="/category/{{ category }}" class="category-btn {% if current_category == category %}active{% endif %}">{{ category }}</a>
             {% endfor %}
+        </div>
+        <div class="sort-bar">
+            <span>Сортировка:</span>
+            <a href="/catalog?sort=new" class="category-btn">По новизне</a>
+            <a href="/catalog?sort=price_asc" class="category-btn">Цена ↑</a>
+            <a href="/catalog?sort=price_desc" class="category-btn">Цена ↓</a>
         </div>
     </nav>
 

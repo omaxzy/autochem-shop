@@ -34,6 +34,11 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+        .stat-card { background: white; padding: 1.2rem; border-radius: 12px; text-align: center; }
+        .stat-number { font-size: 2rem; font-weight: bold; }
+        .stat-label { color: #999; font-size: 0.85rem; }
+        
         .table-container { overflow-x: auto; background: white; border-radius: 12px; margin-bottom: 1rem; }
         table { width: 100%; border-collapse: collapse; min-width: 700px; }
         th { background: #1a1a2e; color: white; padding: 0.7rem; text-align: left; font-size: 0.85rem; }
@@ -48,6 +53,7 @@
             text-decoration: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem; margin-bottom: 0.5rem;
         }
         .add-btn img { width: 16px; height: 16px; }
+        .export-btn { background: #4CAF50; color: white; padding: 0.4rem 1rem; border-radius: 8px; text-decoration: none; font-size: 0.85rem; display: inline-block; margin-bottom: 0.5rem; }
         
         .role-select { padding: 0.2rem; border-radius: 5px; font-size: 0.8rem; }
         .btn-save { background: #4CAF50; color: white; border: none; padding: 0.2rem 0.5rem; border-radius: 5px; cursor: pointer; font-size: 0.75rem; }
@@ -55,6 +61,9 @@
         .badge-admin { background: #e94560; color: white; }
         .badge-manager { background: #2196F3; color: white; }
         .badge-user { background: #ddd; color: #333; }
+        
+        .search-box { background: white; padding: 1rem; border-radius: 12px; margin-bottom: 1rem; }
+        .search-box input { width: 100%; padding: 0.6rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.9rem; }
         
         @media (max-width: 600px) {
             .header h1 { font-size: 1rem; }
@@ -74,6 +83,7 @@
 
     <div class="container">
         <a href="/" class="back-link">← На главную</a>
+        <a href="/admin/export" class="export-btn">📥 Скачать заказы (Excel)</a>
         
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -82,6 +92,31 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
+
+        <!-- Статистика -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" style="color:#e94560;">{{ total_orders }}</div>
+                <div class="stat-label">Всего заказов</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color:#4CAF50;">{{ "%.0f"|format(total_revenue) }} ₽</div>
+                <div class="stat-label">Выручка</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color:#2196F3;">{{ new_orders }}</div>
+                <div class="stat-label">Новых заказов</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color:#333;">{{ products|length }}</div>
+                <div class="stat-label">Товаров</div>
+            </div>
+        </div>
+
+        <!-- Поиск заказов -->
+        <div class="search-box">
+            <input type="text" id="orderSearch" placeholder="🔍 Поиск заказа по имени или телефону..." onkeyup="searchOrders()">
+        </div>
 
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('products')">
@@ -206,6 +241,15 @@
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             event.target.closest('.tab-btn').classList.add('active');
             document.getElementById(tab + '-tab').classList.add('active');
+        }
+        
+        function searchOrders() {
+            const query = document.getElementById('orderSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#orders-tab tbody tr');
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
         }
     </script>
 </body>

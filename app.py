@@ -8,6 +8,9 @@ import os
 import uuid
 from datetime import datetime
 from functools import wraps
+import csv
+from io import StringIO
+from flask import make_response
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-change-this'
@@ -457,6 +460,30 @@ def delivery():
 @app.route('/contacts')
 def contacts():
     return render_template('contacts.html')
+@app.route('/admin/export')
+@admin_required
+def export_orders():
+    si = StringIO()
+    cw = csv.writer(si, delimiter=';')
+    cw.writerow(['ID', 'Дата', 'Клиент', 'Телефон', 'Адрес', 'Товары', 'Сумма', 'Статус'])
+    
+    orders = Order.query.order_by(Order.created_at.desc()).all()
+    for order in orders:
+        cw.writerow([
+            order.id,
+            order.created_at.strftime('%d.%m.%Y %H:%M'),
+            order.customer_name,
+            order.phone,
+            order.address,
+            order.items,
+            f"{order.total_price:.0f}",
+            order.status
+        ])
+    
+    output = make_response(si.getvalue())
+    output.headers['Content-Disposition'] = 'attachment; filename=orders.csv'
+    output.headers['Content-type'] = 'text/csv; charset=utf-8'
+    return output
 
 if __name__ == '__main__':
     with app.app_context():

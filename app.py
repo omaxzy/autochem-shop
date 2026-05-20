@@ -184,7 +184,14 @@ def index():
 
 @app.route('/catalog')
 def catalog():
-    products = Product.query.order_by(Product.created_at.desc()).all()
+    sort = request.args.get('sort', 'new')
+    if sort == 'price_asc':
+        products = Product.query.order_by(Product.price.asc()).all()
+    elif sort == 'price_desc':
+        products = Product.query.order_by(Product.price.desc()).all()
+    else:
+        products = Product.query.order_by(Product.created_at.desc()).all()
+    
     categories = db.session.query(Product.category).distinct().all()
     return render_template('catalog.html', products=products, categories=[cat[0] for cat in categories])
 

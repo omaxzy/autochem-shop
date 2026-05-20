@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог - AutoChem</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        
+        .header { 
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
+            color: white; padding: 0.8rem 1rem; display: flex; 
+            justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 200; flex-wrap: wrap; gap: 0.5rem;
+        }
+        .logo { display: flex; align-items: center; gap: 0.3rem; }
+        .logo img { width: 32px; height: 32px; }
+        .logo a { color: white; text-decoration: none; font-size: 1.2rem; font-weight: bold; }
+        
+        .header-right { display: flex; align-items: center; gap: 0.8rem; }
+        .header-btn { 
+            color: white; text-decoration: none; padding: 0.4rem 0.8rem; 
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 20px;
+            font-size: 0.8rem; display: flex; align-items: center; gap: 0.2rem;
+        }
+        .header-btn img { width: 16px; height: 16px; }
+        .cart-btn { 
+            position: relative; background: #e94560; color: white; 
+            width: 38px; height: 38px; border-radius: 50%; display: flex; 
+            align-items: center; justify-content: center; text-decoration: none;
+        }
+        .cart-btn img { width: 22px; height: 22px; }
+        .cart-count { 
+            position: absolute; top: -5px; right: -5px; 
+            background: white; color: #e94560; width: 18px; height: 18px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 0.6rem; font-weight: bold;
+        }
+        
+        .nav { 
+            background: white; padding: 0.7rem; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky; top: 54px; z-index: 100;
+        }
+        .search-form { display: flex; gap: 0.3rem; margin-bottom: 0.6rem; }
+        .search-input { 
+            flex: 1; padding: 0.5rem 0.8rem; border: 2px solid #e0e0e0; 
+            border-radius: 25px; font-size: 0.85rem;
+        }
+        .search-input:focus { outline: none; border-color: #e94560; }
+        .search-btn { 
+            background: #e94560; color: white; border: none; 
+            padding: 0.5rem 1rem; border-radius: 25px; cursor: pointer; font-size: 0.85rem;
+        }
+        
+        .categories { 
+            display: flex; gap: 0.3rem; overflow-x: auto; padding-bottom: 0.2rem;
+            -webkit-overflow-scrolling: touch; scrollbar-width: none;
+        }
+        .categories::-webkit-scrollbar { display: none; }
+        .category-btn { 
+            background: #f0f0f0; color: #333; padding: 0.3rem 0.7rem; 
+            border-radius: 20px; text-decoration: none; font-size: 0.75rem; 
+            white-space: nowrap; flex-shrink: 0;
+        }
+        .category-btn:hover, .category-btn.active { background: #e94560; color: white; }
+        
+        .flash-messages { max-width: 1300px; margin: 0.5rem auto; padding: 0 0.8rem; }
+        .flash { padding: 0.6rem 1rem; border-radius: 8px; margin-bottom: 0.3rem; font-size: 0.85rem; }
+        .flash.success { background: #d4edda; color: #155724; }
+        .flash.error { background: #f8d7da; color: #721c24; }
+        
+        .container { max-width: 1300px; margin: 1rem auto; padding: 0 0.8rem; }
+        .section-title { font-size: 1.1rem; margin-bottom: 0.8rem; border-bottom: 3px solid #e94560; display: inline-block; padding-bottom: 0.2rem; }
+        
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1rem; }
+        
+        .product-card { 
+            background: white; border-radius: 12px; overflow: hidden; 
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08); transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .product-card:hover { transform: translateY(-5px); }
+        
+        .product-image-container { position: relative; height: 180px; background: #f8f8f8; }
+        .product-image { width: 100%; height: 100%; object-fit: cover; }
+        .product-category-badge {
+            position: absolute; top: 0.5rem; left: 0.5rem;
+            background: rgba(233, 69, 96, 0.9); color: white;
+            padding: 0.2rem 0.5rem; border-radius: 15px; font-size: 0.65rem;
+        }
+        
+        .product-info { padding: 0.8rem; }
+        .product-name { font-size: 0.95rem; font-weight: bold; color: #1a1a2e; margin-bottom: 0.3rem; }
+        .product-name a { color: #1a1a2e; text-decoration: none; }
+        .product-name a:hover { color: #e94560; }
+        .product-meta { display: flex; gap: 0.4rem; margin-bottom: 0.4rem; font-size: 0.7rem; color: #666; }
+        .product-meta span { background: #f5f5f5; padding: 0.15rem 0.4rem; border-radius: 10px; display: flex; align-items: center; gap: 0.15rem; }
+        .product-meta img { width: 14px; height: 14px; }
+        .product-description { color: #777; font-size: 0.75rem; margin-bottom: 0.6rem; }
+        .product-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f0f0f0; padding-top: 0.6rem; }
+        .product-price { font-size: 1.1rem; font-weight: bold; color: #e94560; }
+        .add-to-cart { 
+            background: #e94560; color: white; border: none; 
+            padding: 0.5rem 0.8rem; border-radius: 25px; cursor: pointer; font-size: 0.8rem;
+            transition: all 0.3s; display: flex; align-items: center; gap: 0.2rem;
+        }
+        .add-to-cart img { width: 16px; height: 16px; }
+        .add-to-cart:hover { background: #c73e56; }
+        .add-to-cart.added { background: #4CAF50; }
+        
+        .no-products { text-align: center; padding: 3rem; background: white; border-radius: 12px; color: #999; }
+        .back-link { display: inline-block; margin-bottom: 0.5rem; color: #667eea; text-decoration: none; font-size: 0.85rem; }
+
+        @media (max-width: 600px) {
+            .products-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+            .product-image-container { height: 140px; }
+            .product-info { padding: 0.6rem; }
+            .product-name { font-size: 0.8rem; }
+            .product-description { display: none; }
+            .product-price { font-size: 0.95rem; }
+            .add-to-cart { padding: 0.4rem 0.6rem; font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="/"><img src="/static/icons/car.png" alt=""></a>
+            <a href="/">AutoChem</a>
+        </div>
+        <div class="header-right">
+            {% if session.user_id %}
+                <a href="/account" class="header-btn">
+                    <img src="/static/icons/profile.png" alt=""> {{ session.username }}
+                </a>
+                <a href="/logout" class="header-btn">Выйти</a>
+            {% else %}
+                <a href="/login" class="header-btn">
+                    <img src="/static/icons/lock.png" alt=""> Войти
+                </a>
+                <a href="/register" class="header-btn">
+                    <img src="/static/icons/user.png" alt=""> Регистрация
+                </a>
+            {% endif %}
+            <a href="/cart" class="cart-btn">
+                <img src="/static/icons/cart.png" alt="">
+                <span class="cart-count" id="cart-count">0</span>
+            </a>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <form class="search-form" action="/search" method="GET">
+            <input type="text" name="q" class="search-input" placeholder="Поиск товаров..." value="{{ search_query or '' }}">
+            <button type="submit" class="search-btn">Найти</button>
+        </form>
+        <div class="categories">
+            <a href="/catalog" class="category-btn {% if not current_category %}active{% endif %}">Все</a>
+            {% for category in categories %}
+            <a href="/category/{{ category }}" class="category-btn {% if current_category == category %}active{% endif %}">{{ category }}</a>
+            {% endfor %}
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        <a href="/" class="back-link">← На главную</a>
+        
+        {% if products %}
+            <h2 class="section-title">{% if search_query %}Поиск: "{{ search_query }}"{% elif current_category %}{{ current_category }}{% else %}Все товары{% endif %}</h2>
+            <div class="products-grid">
+                {% for product in products %}
+                <div class="product-card">
+                    <a href="/product/{{ product.id }}">
+                        <div class="product-image-container">
+                            <img src="{{ url_for('uploaded_file', filename=product.image) }}" alt="{{ product.name }}" class="product-image">
+                            <span class="product-category-badge">{{ product.category }}</span>
+                        </div>
+                    </a>
+                    <div class="product-info">
+                        <h3 class="product-name"><a href="/product/{{ product.id }}">{{ product.name }}</a></h3>
+                        <div class="product-meta">
+                            <span><img src="/static/icons/factory.png" alt=""> {{ product.brand }}</span>
+                            <span><img src="/static/icons/box.png" alt=""> {{ product.volume }}</span>
+                        </div>
+                        <p class="product-description">{{ product.description[:100] }}{% if product.description|length > 100 %}...{% endif %}</p>
+                        <div class="product-footer">
+                            <span class="product-price">{{ "%.0f"|format(product.price) }} ₽</span>
+                            <button class="add-to-cart" onclick="event.stopPropagation(); addToCart({{ product.id }}, '{{ product.name|escape }}', {{ product.price }}, '{{ product.image }}')">
+                                <img src="/static/icons/cart.png" alt=""> В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-products"><h2>Товары не найдены</h2><p>Попробуйте изменить запрос</p></div>
+        {% endif %}
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+        
+        function addToCart(id, name, price, image) {
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ id, name, price, image, qty: 1 });
+            }
+            saveCart();
+            
+            const btn = event.target.closest('.add-to-cart');
+            btn.classList.add('added');
+            btn.innerHTML = '<img src="/static/icons/check.png" alt=""> Добавлено';
+            setTimeout(() => {
+                btn.classList.remove('added');
+                btn.innerHTML = '<img src="/static/icons/cart.png" alt=""> В корзину';
+            }, 1500);
+        }
+        
+        function updateCartUI() {
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+        
+        updateCartUI();
+    </script>
+</body>
+</html>

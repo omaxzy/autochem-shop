@@ -81,7 +81,10 @@
         </div>
         <div class="header-right">
             {% if session.user_id %}
-                <a href="/account" class="header-btn"><img src="/static/icons/profile.png" alt=""> {{ session.username }}</a>
+                <a href="/account" class="header-btn">
+{% if session.username == 'admin' %}
+    <a href="/admin" class="header-btn">⚙️ Админ</a>
+{% endif %}<img src="/static/icons/profile.png" alt=""> {{ session.username }}</a>
                 <a href="/logout" class="header-btn">Выйти</a>
             {% else %}
                 <a href="/login" class="header-btn"><img src="/static/icons/lock.png" alt=""> Войти</a>

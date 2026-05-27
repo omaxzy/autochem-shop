@@ -50,6 +50,7 @@ class Product(db.Model):
     brand = db.Column(db.String(100), nullable=False)
     volume = db.Column(db.String(50), nullable=False)
     image = db.Column(db.String(300), nullable=False)
+    instructions = db.Column(db.Text, default='')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -342,7 +343,8 @@ def add_product():
             
             product = Product(
                 name=name, description=description, price=price,
-                category=category, brand=brand, volume=volume, image=filename
+                category=category, brand=brand, volume=volume, image=filename,
+                instructions=request.form.get('instructions', '')
             )
             db.session.add(product)
             db.session.commit()
@@ -362,6 +364,7 @@ def edit_product(id):
         product.category = request.form['category']
         product.brand = request.form['brand']
         product.volume = request.form['volume']
+        product.instructions = request.form.get('instructions', '')
         
         if 'image' in request.files and request.files['image'].filename != '':
             file = request.files['image']

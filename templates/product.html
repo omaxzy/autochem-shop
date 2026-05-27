@@ -4,95 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ product.name }} - AutoChem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --border: #222;
+            --gold: #c9a96e;
+            --gold-light: #d4b87a;
+            --text: #ccc;
+            --text-muted: #888;
+            --white: #fff;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
         
         .header { 
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
-            color: white; padding: 0.8rem 1rem; display: flex; 
-            justify-content: space-between; align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.2rem 3rem; background: rgba(10,10,10,0.95);
+            border-bottom: 1px solid var(--border);
         }
-        .logo { display: flex; align-items: center; gap: 0.3rem; }
-        .logo img { width: 32px; height: 32px; }
-        .logo a { color: white; text-decoration: none; font-size: 1.2rem; font-weight: bold; }
-        .header-right { display: flex; align-items: center; gap: 0.8rem; }
+        .logo { 
+            font-family: 'Playfair Display', serif; font-size: 1.6rem; 
+            font-weight: 700; color: var(--white); letter-spacing: 2px;
+        }
+        .logo a { color: var(--white); text-decoration: none; }
+        .logo span { color: var(--gold); }
+        .header-right { display: flex; align-items: center; gap: 1rem; }
         .header-btn { 
-            color: white; text-decoration: none; padding: 0.4rem 0.8rem; 
-            border: 1px solid rgba(255,255,255,0.3); border-radius: 20px;
-            font-size: 0.8rem; display: flex; align-items: center; gap: 0.2rem;
+            color: var(--text); text-decoration: none; padding: 0.5rem 1.2rem; 
+            border: 1px solid #333; border-radius: 4px;
+            font-size: 0.8rem; font-weight: 500; letter-spacing: 1px;
+            text-transform: uppercase; transition: all 0.3s;
         }
-        .header-btn img { width: 16px; height: 16px; }
+        .header-btn:hover { border-color: var(--gold); color: var(--gold); }
         .cart-btn { 
-            position: relative; background: #e94560; color: white; 
-            width: 38px; height: 38px; border-radius: 50%; display: flex; 
-            align-items: center; justify-content: center; text-decoration: none;
+            position: relative; color: var(--white); text-decoration: none;
+            width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
+            border: 1px solid #333; border-radius: 4px;
         }
-        .cart-btn img { width: 22px; height: 22px; }
         .cart-count { 
-            position: absolute; top: -5px; right: -5px; 
-            background: white; color: #e94560; width: 18px; height: 18px; 
+            position: absolute; top: -6px; right: -6px; 
+            background: var(--gold); color: #000; width: 18px; height: 18px; 
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 0.6rem; font-weight: bold;
+            font-size: 0.6rem; font-weight: 700;
         }
         
-        .container { max-width: 900px; margin: 1.5rem auto; padding: 0 1rem; }
-        .back-link { display: inline-block; margin-bottom: 1rem; color: #667eea; text-decoration: none; font-size: 0.85rem; }
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+        .back-link { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; display: inline-block; margin-bottom: 1.5rem; }
+        .back-link:hover { color: var(--gold); }
         
         .product-detail { 
-            background: white; border-radius: 15px; overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08); display: flex; flex-wrap: wrap;
+            background: var(--surface); border: 1px solid var(--border);
+            display: flex; flex-wrap: wrap;
         }
-        .product-image-large { 
-            width: 100%; max-width: 450px; height: 350px; object-fit: cover; 
-        }
-        .product-detail-info { flex: 1; padding: 1.5rem; min-width: 280px; }
-        .product-detail-name { font-size: 1.5rem; font-weight: bold; color: #1a1a2e; margin-bottom: 0.8rem; }
-        .product-detail-meta { display: flex; gap: 0.8rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .product-image-large { width: 100%; max-width: 450px; height: 400px; object-fit: cover; }
+        .product-detail-info { flex: 1; padding: 2rem; min-width: 280px; }
+        .product-detail-name { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--white); margin-bottom: 1rem; }
+        .product-detail-meta { display: flex; gap: 0.8rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
         .product-detail-meta span { 
-            background: #f5f5f5; padding: 0.3rem 0.7rem; border-radius: 15px; 
-            font-size: 0.85rem; display: flex; align-items: center; gap: 0.3rem;
+            border: 1px solid var(--border); padding: 0.3rem 0.8rem; 
+            font-size: 0.8rem; color: var(--text-muted);
         }
-        .product-detail-meta img { width: 16px; height: 16px; }
-        .product-detail-price { font-size: 2rem; font-weight: bold; color: #e94560; margin-bottom: 1rem; }
-        .product-detail-description { color: #555; line-height: 1.6; margin-bottom: 1.5rem; }
+        .product-detail-price { font-size: 2rem; font-weight: bold; color: var(--gold); margin-bottom: 1.5rem; }
+        .product-detail-description { color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; }
         
         .btn-buy { 
-            background: #e94560; color: white; border: none; 
-            padding: 0.8rem 2rem; border-radius: 25px; cursor: pointer; 
-            font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;
+            background: var(--gold); color: #000; border: none; 
+            padding: 0.9rem 2.5rem; font-size: 0.85rem; font-weight: 600; 
+            letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+            transition: all 0.3s;
         }
-        .btn-buy img { width: 20px; height: 20px; }
-        .btn-buy:hover { background: #c73e56; }
-        .btn-buy.added { background: #4CAF50; }
+        .btn-buy:hover { background: var(--gold-light); }
+        .btn-buy.added { background: #2a5a2a; color: #8fbc8f; }
+
+        .product-footer { 
+            background: var(--surface); border: 1px solid var(--border); 
+            padding: 2rem; margin-top: 1.5rem;
+        }
+        .product-footer h2 { font-family: 'Playfair Display', serif; color: var(--white); margin-bottom: 1rem; font-size: 1.5rem; }
 
         @media (max-width: 700px) {
-            .product-image-large { max-width: 100%; height: 250px; }
-            .product-detail-name { font-size: 1.2rem; }
-            .product-detail-price { font-size: 1.5rem; }
+            .header { padding: 1rem; }
+            .product-image-large { max-width: 100%; height: 280px; }
+            .product-detail-name { font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <div class="logo">
-            <a href="/"><img src="/static/icons/car.png" alt=""></a>
-            <a href="/">AutoChem</a>
-        </div>
+        <div class="logo"><a href="/">AUTO<span>CHEM</span></a></div>
         <div class="header-right">
             {% if session.user_id %}
-                <a href="/account" class="header-btn"><img src="/static/icons/profile.png" alt=""> {{ session.username }}</a>
-                {% if session.username == 'admin' %}
-                    <a href="/admin" class="header-btn">⚙️ Админ</a>
-                {% endif %}
+                <a href="/account" class="header-btn">{{ session.username }}</a>
+                {% if session.username == 'admin' %}<a href="/admin" class="header-btn">Админ</a>{% endif %}
                 <a href="/logout" class="header-btn">Выйти</a>
             {% else %}
-                <a href="/login" class="header-btn"><img src="/static/icons/lock.png" alt=""> Войти</a>
-                <a href="/register" class="header-btn"><img src="/static/icons/user.png" alt=""> Регистрация</a>
+                <a href="/login" class="header-btn">Войти</a>
+                <a href="/register" class="header-btn">Регистрация</a>
             {% endif %}
             <a href="/cart" class="cart-btn">
-                <img src="/static/icons/cart.png" alt="">
-                <span class="cart-count" id="cart-count">0</span>
+                🛒<span class="cart-count" id="cart-count">0</span>
             </a>
         </div>
     </header>
@@ -105,46 +118,38 @@
             <div class="product-detail-info">
                 <h1 class="product-detail-name">{{ product.name }}</h1>
                 <div class="product-detail-meta">
-                    <span><img src="/static/icons/factory.png" alt=""> {{ product.brand }}</span>
-                    <span><img src="/static/icons/box.png" alt=""> {{ product.volume }}</span>
+                    <span>{{ product.brand }}</span>
+                    <span>{{ product.volume }}</span>
                     <span>{{ product.category }}</span>
                 </div>
                 <div class="product-detail-price">{{ "%.0f"|format(product.price) }} ₽</div>
                 <p class="product-detail-description">{{ product.description }}</p>
-                <button class="btn-buy" id="buy-btn" onclick="addToCart({{ product.id }}, '{{ product.name|escape }}', {{ product.price }}, '{{ product.image }}')">
-                    <img src="/static/icons/cart.png" alt=""> В корзину
+                <button class="btn-buy" id="buy-btn" onclick="addToCart({{ product.id }}, '{{ product.name }}', {{ product.price }}, '{{ product.image }}')">
+                    В корзину
                 </button>
             </div>
         </div>
+
+        {% if product.instructions %}
+        <div class="product-footer">
+            <h2>Инструкция по применению</h2>
+            <div style="color: var(--text-muted); line-height: 1.7; white-space: pre-line;">{{ product.instructions }}</div>
+        </div>
+        {% endif %}
     </div>
 
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        
-        function saveCart() {
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartUI();
-        }
-        
+        function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); updateCartUI(); }
         function addToCart(id, name, price, image) {
-            const existing = cart.find(item => item.id === id);
-            if (existing) { existing.qty += 1; }
-            else { cart.push({ id, name, price, image, qty: 1 }); }
+            const existing = cart.find(i => i.id === id);
+            if (existing) existing.qty++; else cart.push({id, name, price, image, qty: 1});
             saveCart();
-            
             const btn = document.getElementById('buy-btn');
-            btn.classList.add('added');
-            btn.innerHTML = '<img src="/static/icons/check.png" alt=""> Добавлено';
-            setTimeout(() => {
-                btn.classList.remove('added');
-                btn.innerHTML = '<img src="/static/icons/cart.png" alt=""> В корзину';
-            }, 1500);
+            btn.classList.add('added'); btn.textContent = 'Добавлено';
+            setTimeout(() => { btn.classList.remove('added'); btn.textContent = 'В корзину'; }, 1500);
         }
-        
-        function updateCartUI() {
-            document.getElementById('cart-count').textContent = cart.reduce((s, i) => s + i.qty, 0);
-        }
-        
+        function updateCartUI() { document.getElementById('cart-count').textContent = cart.reduce((s, i) => s + i.qty, 0); }
         updateCartUI();
     </script>
 </body>

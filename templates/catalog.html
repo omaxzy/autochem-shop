@@ -4,149 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог - AutoChem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --border: #222;
+            --gold: #c9a96e;
+            --gold-light: #d4b87a;
+            --text: #ccc;
+            --text-muted: #888;
+            --white: #fff;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); color: var(--text); min-height: 100vh;
+            display: flex; flex-direction: column;
+        }
         
         .header { 
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
-            color: white; padding: 0.8rem 1rem; display: flex; 
-            justify-content: space-between; align-items: center;
-            position: sticky; top: 0; z-index: 200; flex-wrap: wrap; gap: 0.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.2rem 3rem; background: rgba(10,10,10,0.95);
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 200;
         }
-        .logo { display: flex; align-items: center; gap: 0.3rem; }
-        .logo img { width: 32px; height: 32px; }
-        .logo a { color: white; text-decoration: none; font-size: 1.2rem; font-weight: bold; }
-        
-        .header-right { display: flex; align-items: center; gap: 0.8rem; }
+        .logo { 
+            font-family: 'Playfair Display', serif; font-size: 1.6rem; 
+            font-weight: 700; color: var(--white); letter-spacing: 2px;
+        }
+        .logo a { color: var(--white); text-decoration: none; }
+        .logo span { color: var(--gold); }
+        .header-right { display: flex; align-items: center; gap: 1rem; }
         .header-btn { 
-            color: white; text-decoration: none; padding: 0.4rem 0.8rem; 
-            border: 1px solid rgba(255,255,255,0.3); border-radius: 20px;
-            font-size: 0.8rem; display: flex; align-items: center; gap: 0.2rem;
+            color: var(--text); text-decoration: none; padding: 0.5rem 1.2rem; 
+            border: 1px solid #333; border-radius: 4px;
+            font-size: 0.8rem; font-weight: 500; letter-spacing: 1px;
+            text-transform: uppercase; transition: all 0.3s;
         }
-        .header-btn img { width: 16px; height: 16px; }
+        .header-btn:hover { border-color: var(--gold); color: var(--gold); }
         .cart-btn { 
-            position: relative; background: #e94560; color: white; 
-            width: 38px; height: 38px; border-radius: 50%; display: flex; 
-            align-items: center; justify-content: center; text-decoration: none;
+            position: relative; color: var(--white); text-decoration: none;
+            width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
+            border: 1px solid #333; border-radius: 4px; transition: all 0.3s;
         }
-        .cart-btn img { width: 22px; height: 22px; }
+        .cart-btn:hover { border-color: var(--gold); }
         .cart-count { 
-            position: absolute; top: -5px; right: -5px; 
-            background: white; color: #e94560; width: 18px; height: 18px; 
+            position: absolute; top: -6px; right: -6px; 
+            background: var(--gold); color: #000; width: 18px; height: 18px; 
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 0.6rem; font-weight: bold;
+            font-size: 0.6rem; font-weight: 700;
         }
         
         .nav { 
-            background: white; padding: 0.7rem; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky; top: 54px; z-index: 100;
+            background: var(--surface); padding: 1rem 2rem; 
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 70px; z-index: 100;
         }
-        .search-form { display: flex; gap: 0.3rem; margin-bottom: 0.6rem; }
+        .search-form { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; max-width: 600px; }
         .search-input { 
-            flex: 1; padding: 0.5rem 0.8rem; border: 2px solid #e0e0e0; 
-            border-radius: 25px; font-size: 0.85rem;
+            flex: 1; padding: 0.6rem 1rem; background: var(--bg); 
+            border: 1px solid #333; color: var(--text); font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
         }
-        .search-input:focus { outline: none; border-color: #e94560; }
+        .search-input:focus { outline: none; border-color: var(--gold); }
         .search-btn { 
-            background: #e94560; color: white; border: none; 
-            padding: 0.5rem 1rem; border-radius: 25px; cursor: pointer; font-size: 0.85rem;
+            background: var(--gold); color: #000; border: none; 
+            padding: 0.6rem 1.2rem; cursor: pointer; font-weight: 600; 
+            text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;
         }
-        
-        .categories { 
-            display: flex; gap: 0.3rem; overflow-x: auto; padding-bottom: 0.2rem;
-            -webkit-overflow-scrolling: touch; scrollbar-width: none;
-        }
-        .categories::-webkit-scrollbar { display: none; }
+        .search-btn:hover { background: var(--gold-light); }
+        .categories { display: flex; gap: 0.5rem; overflow-x: auto; }
         .category-btn { 
-            background: #f0f0f0; color: #333; padding: 0.3rem 0.7rem; 
-            border-radius: 20px; text-decoration: none; font-size: 0.75rem; 
-            white-space: nowrap; flex-shrink: 0;
+            background: transparent; color: var(--text-muted); 
+            padding: 0.4rem 1rem; border: 1px solid #333; 
+            text-decoration: none; font-size: 0.75rem; white-space: nowrap;
+            text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s;
         }
-        .category-btn:hover, .category-btn.active { background: #e94560; color: white; }
+        .category-btn:hover, .category-btn.active { border-color: var(--gold); color: var(--gold); }
+
+        .sort-bar { display: flex; gap: 0.5rem; margin-top: 0.6rem; align-items: center; }
+        .sort-bar span { color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .sort-bar a { font-size: 0.7rem; padding: 0.3rem 0.8rem; }
         
-        .sort-bar { display: flex; gap: 0.3rem; margin-top: 0.5rem; align-items: center; }
-        .sort-bar span { font-size: 0.75rem; color: #999; }
+        .container { max-width: 1300px; margin: 2rem auto; padding: 0 1rem; flex: 1; }
+        .section-title { 
+            font-family: 'Playfair Display', serif; font-size: 1.8rem; 
+            color: var(--white); margin-bottom: 2rem;
+        }
+        .section-title span { color: var(--gold); }
         
-        .flash-messages { max-width: 1300px; margin: 0.5rem auto; padding: 0 0.8rem; }
-        .flash { padding: 0.6rem 1rem; border-radius: 8px; margin-bottom: 0.3rem; font-size: 0.85rem; }
-        .flash.success { background: #d4edda; color: #155724; }
-        .flash.error { background: #f8d7da; color: #721c24; }
-        
-        .container { max-width: 1300px; margin: 1rem auto; padding: 0 0.8rem; }
-        .section-title { font-size: 1.1rem; margin-bottom: 0.8rem; border-bottom: 3px solid #e94560; display: inline-block; padding-bottom: 0.2rem; }
-        
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1rem; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
         
         .product-card { 
-            background: white; border-radius: 12px; overflow: hidden; 
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08); transition: transform 0.3s;
-            cursor: pointer;
+            background: var(--surface); border: 1px solid var(--border);
+            display: flex; flex-direction: column; transition: all 0.3s;
         }
-        .product-card:hover { transform: translateY(-5px); }
-        
-        .product-image-container { position: relative; height: 180px; background: #f8f8f8; }
-        .product-image { width: 100%; height: 100%; object-fit: cover; }
-        .product-category-badge {
-            position: absolute; top: 0.5rem; left: 0.5rem;
-            background: rgba(233, 69, 96, 0.9); color: white;
-            padding: 0.2rem 0.5rem; border-radius: 15px; font-size: 0.65rem;
+        .product-card:hover { border-color: var(--gold); }
+        .product-image-container { height: 220px; background: #000; overflow: hidden; }
+        .product-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+        .product-card:hover .product-image { transform: scale(1.03); }
+        .product-info { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
+        .product-name { 
+            font-size: 1rem; font-weight: 600; color: var(--white); 
+            margin-bottom: 0.5rem;
         }
-        
-        .product-info { padding: 0.8rem; }
-        .product-name { font-size: 0.95rem; font-weight: bold; color: #1a1a2e; margin-bottom: 0.3rem; }
-        .product-name a { color: #1a1a2e; text-decoration: none; }
-        .product-name a:hover { color: #e94560; }
-        .product-meta { display: flex; gap: 0.4rem; margin-bottom: 0.4rem; font-size: 0.7rem; color: #666; }
-        .product-meta span { background: #f5f5f5; padding: 0.15rem 0.4rem; border-radius: 10px; display: flex; align-items: center; gap: 0.15rem; }
-        .product-meta img { width: 14px; height: 14px; }
-        .product-description { color: #777; font-size: 0.75rem; margin-bottom: 0.6rem; }
-        .product-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f0f0f0; padding-top: 0.6rem; }
-        .product-price { font-size: 1.1rem; font-weight: bold; color: #e94560; }
+        .product-name a { color: var(--white); text-decoration: none; }
+        .product-name a:hover { color: var(--gold); }
+        .product-meta { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; font-size: 0.75rem; color: var(--text-muted); }
+        .product-meta span { border: 1px solid #222; padding: 0.2rem 0.5rem; }
+        .product-description { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem; flex: 1; }
+        .product-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 1rem; margin-top: auto; }
+        .product-price { font-size: 1.2rem; font-weight: 700; color: var(--gold); }
         .add-to-cart { 
-            background: #e94560; color: white; border: none; 
-            padding: 0.5rem 0.8rem; border-radius: 25px; cursor: pointer; font-size: 0.8rem;
-            transition: all 0.3s; display: flex; align-items: center; gap: 0.2rem;
+            background: var(--gold); color: #000; border: none; 
+            padding: 0.5rem 1rem; cursor: pointer; font-weight: 600; 
+            text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.75rem;
+            transition: all 0.3s;
         }
-        .add-to-cart img { width: 16px; height: 16px; }
-        .add-to-cart:hover { background: #c73e56; }
-        .add-to-cart.added { background: #4CAF50; }
-        
-        .no-products { text-align: center; padding: 3rem; background: white; border-radius: 12px; color: #999; }
-        .back-link { display: inline-block; margin-bottom: 0.5rem; color: #667eea; text-decoration: none; font-size: 0.85rem; }
+        .add-to-cart:hover { background: var(--gold-light); }
+        .add-to-cart.added { background: #2a5a2a; color: #8fbc8f; }
 
-        @media (max-width: 600px) {
-            .products-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-            .product-image-container { height: 140px; }
-            .product-info { padding: 0.6rem; }
-            .product-name { font-size: 0.8rem; }
+        .no-products { text-align: center; padding: 4rem; color: var(--text-muted); }
+        .back-link { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; display: inline-block; margin-bottom: 1rem; }
+        .back-link:hover { color: var(--gold); }
+
+        .footer { 
+            text-align: center; padding: 1.5rem; border-top: 1px solid var(--border);
+            color: var(--text-muted); font-size: 0.75rem; font-weight: 300;
+        }
+
+        @media (max-width: 700px) {
+            .header { padding: 1rem; }
+            .products-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+            .product-image-container { height: 160px; }
+            .product-info { padding: 1rem; }
+            .product-name { font-size: 0.85rem; }
             .product-description { display: none; }
-            .product-price { font-size: 0.95rem; }
-            .add-to-cart { padding: 0.4rem 0.6rem; font-size: 0.7rem; }
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <div class="logo">
-            <a href="/"><img src="/static/icons/car.png" alt=""></a>
-            <a href="/">AutoChem</a>
-        </div>
+        <div class="logo"><a href="/">AUTO<span>CHEM</span></a></div>
         <div class="header-right">
             {% if session.user_id %}
-                <a href="/account" class="header-btn"><img src="/static/icons/profile.png" alt=""> {{ session.username }}</a>
-                {% if session.username == 'admin' %}
-                    <a href="/admin" class="header-btn"><img src="/static/icons/settings.png" alt=""> Админ</a>
-                {% endif %}
+                <a href="/account" class="header-btn">{{ session.username }}</a>
+                {% if session.username == 'admin' %}<a href="/admin" class="header-btn">Админ</a>{% endif %}
                 <a href="/logout" class="header-btn">Выйти</a>
             {% else %}
-                <a href="/login" class="header-btn"><img src="/static/icons/lock.png" alt=""> Войти</a>
-                <a href="/register" class="header-btn"><img src="/static/icons/user.png" alt=""> Регистрация</a>
+                <a href="/login" class="header-btn">Войти</a>
+                <a href="/register" class="header-btn">Регистрация</a>
             {% endif %}
             <a href="/cart" class="cart-btn">
-                <img src="/static/icons/cart.png" alt="">
-                <span class="cart-count" id="cart-count">0</span>
+                🛒<span class="cart-count" id="cart-count">0</span>
             </a>
         </div>
     </header>
@@ -164,89 +176,61 @@
         </div>
         <div class="sort-bar">
             <span>Сортировка:</span>
-            <a href="/catalog?sort=new" class="category-btn">По новизне</a>
+            <a href="/catalog?sort=new" class="category-btn">Новинки</a>
             <a href="/catalog?sort=price_asc" class="category-btn">Цена ↑</a>
             <a href="/catalog?sort=price_desc" class="category-btn">Цена ↓</a>
         </div>
     </nav>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="flash-messages">
-                {% for category, message in messages %}
-                    <div class="flash {{ category }}">{{ message }}</div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
-
     <div class="container">
         <a href="/" class="back-link">← На главную</a>
         
         {% if products %}
-            <h2 class="section-title">{% if search_query %}Поиск: "{{ search_query }}"{% elif current_category %}{{ current_category }}{% else %}Все товары{% endif %}</h2>
+            <h1 class="section-title">Каталог <span>товаров</span></h1>
             <div class="products-grid">
                 {% for product in products %}
                 <div class="product-card">
                     <a href="/product/{{ product.id }}">
                         <div class="product-image-container">
                             <img src="{{ url_for('uploaded_file', filename=product.image) }}" alt="{{ product.name }}" class="product-image">
-                            <span class="product-category-badge">{{ product.category }}</span>
                         </div>
                     </a>
                     <div class="product-info">
-                        <h3 class="product-name"><a href="/product/{{ product.id }}">{{ product.name }}</a></h3>
+                        <div class="product-name"><a href="/product/{{ product.id }}">{{ product.name }}</a></div>
                         <div class="product-meta">
-                            <span><img src="/static/icons/factory.png" alt=""> {{ product.brand }}</span>
-                            <span><img src="/static/icons/box.png" alt=""> {{ product.volume }}</span>
+                            <span>{{ product.brand }}</span>
+                            <span>{{ product.volume }}</span>
                         </div>
-                        <p class="product-description">{{ product.description[:100] }}{% if product.description|length > 100 %}...{% endif %}</p>
+                        <div class="product-description">{{ product.description[:80] }}...</div>
                         <div class="product-footer">
                             <span class="product-price">{{ "%.0f"|format(product.price) }} ₽</span>
-                            <button class="add-to-cart" onclick="event.stopPropagation(); addToCart({{ product.id }}, '{{ product.name|escape }}', {{ product.price }}, '{{ product.image }}')">
-                                <img src="/static/icons/cart.png" alt=""> В корзину
-                            </button>
+                            <button class="add-to-cart" onclick="addToCart({{ product.id }}, '{{ product.name }}', {{ product.price }}, '{{ product.image }}')">В корзину</button>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
         {% else %}
-            <div class="no-products"><h2>Товары не найдены</h2><p>Попробуйте изменить запрос</p></div>
+            <div class="no-products"><h2>Товары не найдены</h2></div>
         {% endif %}
     </div>
 
+    <footer class="footer">
+        &copy; 2026 AutoChem. Все права защищены.
+    </footer>
+
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        
-        function saveCart() {
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartUI();
-        }
-        
+        function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); updateCartUI(); }
         function addToCart(id, name, price, image) {
-            const existing = cart.find(item => item.id === id);
-            if (existing) {
-                existing.qty += 1;
-            } else {
-                cart.push({ id, name, price, image, qty: 1 });
-            }
+            const existing = cart.find(i => i.id === id);
+            if (existing) existing.qty++; else cart.push({id, name, price, image, qty: 1});
             saveCart();
-            
-            const btn = event.target.closest('.add-to-cart');
-            btn.classList.add('added');
-            btn.innerHTML = '<img src="/static/icons/check.png" alt=""> Добавлено';
-            setTimeout(() => {
-                btn.classList.remove('added');
-                btn.innerHTML = '<img src="/static/icons/cart.png" alt=""> В корзину';
-            }, 1500);
+            const btn = event.target;
+            btn.classList.add('added'); btn.textContent = '✓ Добавлено';
+            setTimeout(() => { btn.classList.remove('added'); btn.textContent = 'В корзину'; }, 1500);
         }
-        
-        function updateCartUI() {
-            const count = cart.reduce((sum, item) => sum + item.qty, 0);
-            document.getElementById('cart-count').textContent = count;
-        }
-        
+        function updateCartUI() { document.getElementById('cart-count').textContent = cart.reduce((s, i) => s + i.qty, 0); }
         updateCartUI();
     </script>
 </body>

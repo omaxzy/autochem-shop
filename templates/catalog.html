@@ -4,144 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог - AutoChem</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0a;
-            --surface: #141414;
-            --border: #222;
-            --gold: #c9a96e;
-            --gold-light: #d4b87a;
-            --text: #ccc;
-            --text-muted: #888;
+            --bg: #fafafa;
+            --surface: #fff;
+            --border: #e8e8e8;
+            --accent: #1a1a2e;
+            --text: #333;
+            --muted: #999;
             --white: #fff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: 'Inter', sans-serif; 
+            font-family: 'Nunito', sans-serif; 
             background: var(--bg); color: var(--text); min-height: 100vh;
             display: flex; flex-direction: column;
         }
         
         .header { 
             display: flex; justify-content: space-between; align-items: center;
-            padding: 1.2rem 3rem; background: rgba(10,10,10,0.95);
-            border-bottom: 1px solid var(--border);
+            padding: 1rem 3rem; background: var(--white); border-bottom: 1px solid var(--border);
             position: sticky; top: 0; z-index: 200;
         }
-        .logo { 
-            font-family: 'Playfair Display', serif; font-size: 1.6rem; 
-            font-weight: 700; color: var(--white); letter-spacing: 2px;
-        }
-        .logo a { color: var(--white); text-decoration: none; }
-        .logo span { color: var(--gold); }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+        .logo a { color: var(--accent); text-decoration: none; }
+        .logo span { color: #e94560; }
         .header-right { display: flex; align-items: center; gap: 1rem; }
         .header-btn { 
             color: var(--text); text-decoration: none; padding: 0.5rem 1.2rem; 
-            border: 1px solid #333; border-radius: 4px;
-            font-size: 0.8rem; font-weight: 500; letter-spacing: 1px;
-            text-transform: uppercase; transition: all 0.3s;
+            border: 2px solid var(--border); border-radius: 30px;
+            font-size: 0.85rem; font-weight: 600; transition: all 0.3s;
         }
-        .header-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .header-btn:hover { border-color: var(--accent); background: var(--accent); color: white; }
         .cart-btn { 
-            position: relative; color: var(--white); text-decoration: none;
+            position: relative; color: var(--accent); text-decoration: none;
             width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
-            border: 1px solid #333; border-radius: 4px; transition: all 0.3s;
+            border: 2px solid var(--border); border-radius: 50%;
         }
-        .cart-btn:hover { border-color: var(--gold); }
         .cart-count { 
             position: absolute; top: -6px; right: -6px; 
-            background: var(--gold); color: #000; width: 18px; height: 18px; 
+            background: #e94560; color: white; width: 20px; height: 20px; 
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 0.6rem; font-weight: 700;
+            font-size: 0.65rem; font-weight: 800;
         }
         
         .nav { 
-            background: var(--surface); padding: 1rem 2rem; 
-            border-bottom: 1px solid var(--border);
+            background: var(--white); padding: 1rem 2rem; border-bottom: 1px solid var(--border);
             position: sticky; top: 70px; z-index: 100;
         }
-        .search-form { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; max-width: 600px; }
+        .search-form { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; max-width: 500px; }
         .search-input { 
-            flex: 1; padding: 0.6rem 1rem; background: var(--bg); 
-            border: 1px solid #333; color: var(--text); font-size: 0.85rem;
-            font-family: 'Inter', sans-serif;
+            flex: 1; padding: 0.7rem 1rem; background: var(--bg); 
+            border: 2px solid var(--border); border-radius: 30px; font-size: 0.85rem;
+            font-family: 'Nunito', sans-serif;
         }
-        .search-input:focus { outline: none; border-color: var(--gold); }
+        .search-input:focus { outline: none; border-color: var(--accent); }
         .search-btn { 
-            background: var(--gold); color: #000; border: none; 
-            padding: 0.6rem 1.2rem; cursor: pointer; font-weight: 600; 
-            text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;
+            background: var(--accent); color: white; border: none; 
+            padding: 0.7rem 1.2rem; border-radius: 30px; cursor: pointer; font-weight: 700;
         }
-        .search-btn:hover { background: var(--gold-light); }
         .categories { display: flex; gap: 0.5rem; overflow-x: auto; }
         .category-btn { 
-            background: transparent; color: var(--text-muted); 
-            padding: 0.4rem 1rem; border: 1px solid #333; 
-            text-decoration: none; font-size: 0.75rem; white-space: nowrap;
-            text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s;
+            background: var(--bg); color: var(--text); 
+            padding: 0.4rem 1rem; border: 2px solid var(--border); border-radius: 30px;
+            text-decoration: none; font-size: 0.8rem; font-weight: 600; white-space: nowrap;
         }
-        .category-btn:hover, .category-btn.active { border-color: var(--gold); color: var(--gold); }
-
-        .sort-bar { display: flex; gap: 0.5rem; margin-top: 0.6rem; align-items: center; }
-        .sort-bar span { color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        .sort-bar a { font-size: 0.7rem; padding: 0.3rem 0.8rem; }
+        .category-btn:hover, .category-btn.active { border-color: var(--accent); }
         
         .container { max-width: 1300px; margin: 2rem auto; padding: 0 1rem; flex: 1; }
-        .section-title { 
-            font-family: 'Playfair Display', serif; font-size: 1.8rem; 
-            color: var(--white); margin-bottom: 2rem;
-        }
-        .section-title span { color: var(--gold); }
+        .back-link { color: var(--muted); text-decoration: none; font-size: 0.85rem; display: inline-block; margin-bottom: 1rem; }
         
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
         
         .product-card { 
-            background: var(--surface); border: 1px solid var(--border);
-            display: flex; flex-direction: column; transition: all 0.3s;
+            background: var(--white); border: 1px solid var(--border); border-radius: 16px;
+            overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s;
         }
-        .product-card:hover { border-color: var(--gold); }
-        .product-image-container { height: 220px; background: #000; overflow: hidden; }
-        .product-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
-        .product-card:hover .product-image { transform: scale(1.03); }
-        .product-info { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
-        .product-name { 
-            font-size: 1rem; font-weight: 600; color: var(--white); 
-            margin-bottom: 0.5rem;
-        }
-        .product-name a { color: var(--white); text-decoration: none; }
-        .product-name a:hover { color: var(--gold); }
-        .product-meta { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; font-size: 0.75rem; color: var(--text-muted); }
-        .product-meta span { border: 1px solid #222; padding: 0.2rem 0.5rem; }
-        .product-description { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem; flex: 1; }
+        .product-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .product-image-container { height: 220px; background: var(--bg); }
+        .product-image { width: 100%; height: 100%; object-fit: cover; }
+        .product-info { padding: 1.2rem; display: flex; flex-direction: column; flex: 1; }
+        .product-name { font-size: 1rem; font-weight: 700; color: var(--accent); }
+        .product-name a { color: var(--accent); text-decoration: none; }
+        .product-meta { display: flex; gap: 0.5rem; margin: 0.5rem 0; font-size: 0.8rem; color: var(--muted); }
+        .product-description { color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem; flex: 1; }
         .product-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 1rem; margin-top: auto; }
-        .product-price { font-size: 1.2rem; font-weight: 700; color: var(--gold); }
+        .product-price { font-size: 1.2rem; font-weight: 800; color: var(--accent); }
         .add-to-cart { 
-            background: var(--gold); color: #000; border: none; 
-            padding: 0.5rem 1rem; cursor: pointer; font-weight: 600; 
-            text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.75rem;
-            transition: all 0.3s;
+            background: var(--accent); color: white; border: none; 
+            padding: 0.5rem 1.2rem; border-radius: 30px; cursor: pointer; font-weight: 700; font-size: 0.8rem;
         }
-        .add-to-cart:hover { background: var(--gold-light); }
-        .add-to-cart.added { background: #2a5a2a; color: #8fbc8f; }
 
-        .no-products { text-align: center; padding: 4rem; color: var(--text-muted); }
-        .back-link { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; display: inline-block; margin-bottom: 1rem; }
-        .back-link:hover { color: var(--gold); }
-
-        .footer { 
-            text-align: center; padding: 1.5rem; border-top: 1px solid var(--border);
-            color: var(--text-muted); font-size: 0.75rem; font-weight: 300;
-        }
+        .footer { text-align: center; padding: 1.5rem; background: var(--accent); color: rgba(255,255,255,0.6); font-size: 0.8rem; }
 
         @media (max-width: 700px) {
             .header { padding: 1rem; }
             .products-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
             .product-image-container { height: 160px; }
-            .product-info { padding: 1rem; }
-            .product-name { font-size: 0.85rem; }
-            .product-description { display: none; }
+            .product-info { padding: 0.8rem; }
         }
     </style>
 </head>
@@ -157,50 +119,31 @@
                 <a href="/login" class="header-btn">Войти</a>
                 <a href="/register" class="header-btn">Регистрация</a>
             {% endif %}
-            <a href="/cart" class="cart-btn">
-                🛒<span class="cart-count" id="cart-count">0</span>
-            </a>
+            <a href="/cart" class="cart-btn">🛒<span class="cart-count" id="cart-count">0</span></a>
         </div>
     </header>
 
     <nav class="nav">
         <form class="search-form" action="/search" method="GET">
-            <input type="text" name="q" class="search-input" placeholder="Поиск товаров..." value="{{ search_query or '' }}">
+            <input type="text" name="q" class="search-input" placeholder="Поиск...">
             <button type="submit" class="search-btn">Найти</button>
         </form>
         <div class="categories">
             <a href="/catalog" class="category-btn {% if not current_category %}active{% endif %}">Все</a>
-            {% for category in categories %}
-            <a href="/category/{{ category }}" class="category-btn {% if current_category == category %}active{% endif %}">{{ category }}</a>
-            {% endfor %}
-        </div>
-        <div class="sort-bar">
-            <span>Сортировка:</span>
-            <a href="/catalog?sort=new" class="category-btn">Новинки</a>
-            <a href="/catalog?sort=price_asc" class="category-btn">Цена ↑</a>
-            <a href="/catalog?sort=price_desc" class="category-btn">Цена ↓</a>
+            {% for category in categories %}<a href="/category/{{ category }}" class="category-btn {% if current_category == category %}active{% endif %}">{{ category }}</a>{% endfor %}
         </div>
     </nav>
 
     <div class="container">
         <a href="/" class="back-link">← На главную</a>
-        
         {% if products %}
-            <h1 class="section-title">Каталог <span>товаров</span></h1>
             <div class="products-grid">
                 {% for product in products %}
                 <div class="product-card">
-                    <a href="/product/{{ product.id }}">
-                        <div class="product-image-container">
-                            <img src="{{ url_for('uploaded_file', filename=product.image) }}" alt="{{ product.name }}" class="product-image">
-                        </div>
-                    </a>
+                    <a href="/product/{{ product.id }}"><div class="product-image-container"><img src="{{ url_for('uploaded_file', filename=product.image) }}" class="product-image"></div></a>
                     <div class="product-info">
                         <div class="product-name"><a href="/product/{{ product.id }}">{{ product.name }}</a></div>
-                        <div class="product-meta">
-                            <span>{{ product.brand }}</span>
-                            <span>{{ product.volume }}</span>
-                        </div>
+                        <div class="product-meta"><span>{{ product.brand }}</span><span>{{ product.volume }}</span></div>
                         <div class="product-description">{{ product.description[:80] }}...</div>
                         <div class="product-footer">
                             <span class="product-price">{{ "%.0f"|format(product.price) }} ₽</span>
@@ -211,14 +154,11 @@
                 {% endfor %}
             </div>
         {% else %}
-            <div class="no-products"><h2>Товары не найдены</h2></div>
+            <p style="text-align:center; color:var(--muted); padding:3rem;">Товары не найдены</p>
         {% endif %}
     </div>
 
-    <footer class="footer">
-        &copy; 2026 AutoChem. Все права защищены.
-    </footer>
-
+    <footer class="footer">&copy; 2026 AutoChem</footer>
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); updateCartUI(); }
@@ -226,9 +166,6 @@
             const existing = cart.find(i => i.id === id);
             if (existing) existing.qty++; else cart.push({id, name, price, image, qty: 1});
             saveCart();
-            const btn = event.target;
-            btn.classList.add('added'); btn.textContent = '✓ Добавлено';
-            setTimeout(() => { btn.classList.remove('added'); btn.textContent = 'В корзину'; }, 1500);
         }
         function updateCartUI() { document.getElementById('cart-count').textContent = cart.reduce((s, i) => s + i.qty, 0); }
         updateCartUI();

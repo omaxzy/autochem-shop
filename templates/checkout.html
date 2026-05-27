@@ -4,175 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Оформление заказа - AutoChem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            min-height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            padding: 1rem;
-        }
-        
-        .checkout-container { 
-            background: white; 
-            border-radius: 20px; 
-            padding: 2rem; 
-            max-width: 550px; 
-            width: 100%; 
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        
-        h1 { 
-            color: #1a1a2e; 
-            margin-bottom: 0.3rem; 
-            text-align: center;
-            font-size: 1.5rem;
-        }
-        .subtitle {
-            text-align: center;
-            color: #999;
-            margin-bottom: 1.5rem;
-            font-size: 0.85rem;
-        }
-        
-        .cart-summary {
-            background: #f8f8f8;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1.5rem;
-        }
-        .cart-summary h3 { margin-bottom: 0.5rem; font-size: 0.95rem; color: #333; }
-        .cart-summary-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.3rem 0;
-            font-size: 0.85rem;
-            border-bottom: 1px solid #eee;
-        }
-        .cart-summary-total {
-            display: flex;
-            justify-content: space-between;
-            padding-top: 0.5rem;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-        
+        body { font-family: 'Nunito', sans-serif; background: #fafafa; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+        .container { background: white; border-radius: 20px; padding: 2rem; max-width: 500px; width: 100%; border: 1px solid #e8e8e8; }
+        h1 { font-weight: 800; color: #1a1a2e; text-align: center; margin-bottom: 0.3rem; }
+        .subtitle { text-align: center; color: #999; margin-bottom: 1.5rem; font-size: 0.9rem; }
+        .cart-summary { background: #fafafa; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; }
+        .cart-summary h3 { font-weight: 700; margin-bottom: 0.5rem; }
+        .cart-summary-item { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.2rem 0; }
+        .cart-summary-total { display: flex; justify-content: space-between; font-weight: 800; padding-top: 0.5rem; border-top: 1px solid #e8e8e8; margin-top: 0.3rem; }
         .form-group { margin-bottom: 1rem; }
-        label { 
-            display: block; 
-            margin-bottom: 0.3rem; 
-            font-weight: 600; 
-            color: #333;
-            font-size: 0.85rem;
-        }
-        .required::after { content: " *"; color: #e94560; }
-        
+        label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; }
         input, textarea { 
-            width: 100%; 
-            padding: 0.7rem 0.8rem; 
-            border: 2px solid #e0e0e0; 
-            border-radius: 8px; 
-            font-size: 0.9rem; 
-            font-family: inherit;
-            transition: border-color 0.3s;
+            width: 100%; padding: 0.8rem; border: 2px solid #e8e8e8; border-radius: 12px; 
+            font-size: 0.9rem; font-family: 'Nunito', sans-serif;
         }
-        input:focus, textarea:focus { outline: none; border-color: #667eea; }
-        textarea { min-height: 70px; resize: vertical; }
-        
+        input:focus, textarea:focus { outline: none; border-color: #1a1a2e; }
         .btn-submit { 
-            background: #e94560; 
-            color: white; 
-            border: none; 
-            padding: 0.8rem; 
-            border-radius: 10px; 
-            font-size: 1rem; 
-            cursor: pointer; 
-            width: 100%; 
-            font-weight: 600;
-            transition: background 0.3s;
+            background: #1a1a2e; color: white; border: none; padding: 0.9rem; 
+            border-radius: 30px; font-size: 0.95rem; font-weight: 700; cursor: pointer; width: 100%;
         }
-        .btn-submit:hover { background: #c73e56; }
-        
-        .back-link { 
-            display: block; 
-            text-align: center; 
-            margin-top: 0.8rem; 
-            color: #999; 
-            text-decoration: none;
-            font-size: 0.85rem;
-        }
-        .back-link:hover { color: #333; }
+        .back-link { display: block; text-align: center; margin-top: 0.8rem; color: #999; text-decoration: none; font-size: 0.85rem; }
     </style>
 </head>
 <body>
-    <div class="checkout-container">
+    <div class="container">
         <h1>📦 Оформление заказа</h1>
         <p class="subtitle">Заполните данные для доставки</p>
-
         <div class="cart-summary" id="cart-summary">
             <h3>Ваш заказ:</h3>
             <div id="cart-items-list"></div>
-            <div class="cart-summary-total">
-                <span>Итого:</span>
-                <span id="cart-total">0 ₽</span>
-            </div>
+            <div class="cart-summary-total"><span>Итого:</span><span id="cart-total">0 ₽</span></div>
         </div>
-
         <form method="POST" action="/checkout">
-            <div class="form-group">
-                <label class="required">Ваше имя</label>
-                <input type="text" name="name" required placeholder="Иван Иванов">
-            </div>
-
-            <div class="form-group">
-                <label class="required">Телефон</label>
-                <input type="tel" name="phone" required placeholder="+7 (999) 123-45-67">
-            </div>
-
-            <div class="form-group">
-                <label class="required">Адрес доставки</label>
-                <textarea name="address" required placeholder="Город, улица, дом, квартира"></textarea>
-            </div>
-
+            <div class="form-group"><label>Ваше имя *</label><input type="text" name="name" required></div>
+            <div class="form-group"><label>Телефон *</label><input type="tel" name="phone" required></div>
+            <div class="form-group"><label>Адрес доставки *</label><textarea name="address" required rows="2"></textarea></div>
             <input type="hidden" name="items" id="items-input">
-<input type="hidden" name="total" id="total-input">
-<input type="hidden" name="cart_items" id="cart-items-input">
-
+            <input type="hidden" name="total" id="total-input">
             <button type="submit" class="btn-submit">✅ Подтвердить заказ</button>
         </form>
-
-        <a href="/" class="back-link">← Вернуться в магазин</a>
+        <a href="/cart" class="back-link">← Вернуться в корзину</a>
     </div>
-
     <script>
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        
-        if (cart.length === 0) {
-            window.location.href = '/';
-        }
-        
+        if (cart.length === 0) window.location.href = '/cart';
         const itemsList = document.getElementById('cart-items-list');
         let total = 0;
-        
         cart.forEach(item => {
-            const itemTotal = item.price * item.qty;
-            total += itemTotal;
-            itemsList.innerHTML += `
-                <div class="cart-summary-item">
-                    <span>${item.name} × ${item.qty}</span>
-                    <span>${itemTotal.toLocaleString()} ₽</span>
-                </div>
-            `;
+            const itemTotal = item.price * item.qty; total += itemTotal;
+            itemsList.innerHTML += `<div class="cart-summary-item"><span>${item.name} × ${item.qty}</span><span>${itemTotal.toLocaleString()} ₽</span></div>`;
         });
-        
         document.getElementById('cart-total').textContent = total.toLocaleString() + ' ₽';
         document.getElementById('items-input').value = JSON.stringify(cart);
         document.getElementById('total-input').value = total;
-document.getElementById('cart-items-input').value = JSON.stringify(cart);
-        
         localStorage.removeItem('cart');
     </script>
 </body>

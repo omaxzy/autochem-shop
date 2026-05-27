@@ -4,183 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Корзина - AutoChem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
-        
+        body { font-family: 'Nunito', sans-serif; background: #fafafa; min-height: 100vh; }
         .header { 
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
-            color: white; padding: 0.8rem 1rem; display: flex; 
-            justify-content: space-between; align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 3rem; background: white; border-bottom: 1px solid #e8e8e8;
         }
-        .logo { display: flex; align-items: center; gap: 0.3rem; }
-        .logo img { width: 32px; height: 32px; }
-        .logo a { color: white; text-decoration: none; font-size: 1.2rem; font-weight: bold; }
-        .header-right { display: flex; align-items: center; gap: 0.8rem; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: #1a1a2e; }
+        .logo a { color: #1a1a2e; text-decoration: none; }
+        .logo span { color: #e94560; }
+        .header-right { display: flex; align-items: center; gap: 1rem; }
         .header-btn { 
-            color: white; text-decoration: none; padding: 0.4rem 0.8rem; 
-            border: 1px solid rgba(255,255,255,0.3); border-radius: 20px;
-            font-size: 0.8rem; display: flex; align-items: center; gap: 0.2rem;
+            color: #333; text-decoration: none; padding: 0.5rem 1.2rem; 
+            border: 2px solid #e8e8e8; border-radius: 30px; font-size: 0.85rem; font-weight: 600;
         }
-        .header-btn img { width: 16px; height: 16px; }
-        
-        .container { max-width: 800px; margin: 1.5rem auto; padding: 0 1rem; }
-        .back-link { display: inline-block; margin-bottom: 1rem; color: #667eea; text-decoration: none; font-size: 0.85rem; }
-        
-        .cart-container { background: white; border-radius: 15px; padding: 1.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
-        .cart-container h1 { font-size: 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        .cart-container h1 img { width: 28px; height: 28px; }
-        
-        .cart-item { 
-            display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #eee;
-            align-items: center; flex-wrap: wrap;
-        }
-        .cart-item-img { width: 80px; height: 80px; object-fit: cover; border-radius: 10px; }
-        .cart-item-info { flex: 1; min-width: 180px; }
-        .cart-item-name { font-weight: bold; font-size: 0.95rem; }
-        .cart-item-price { color: #e94560; font-weight: bold; margin-top: 0.3rem; }
-        .cart-item-controls { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        .back-link { color: #999; text-decoration: none; font-size: 0.85rem; display: inline-block; margin-bottom: 1rem; }
+        .cart-container { background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid #e8e8e8; }
+        .cart-container h1 { font-weight: 800; color: #1a1a2e; margin-bottom: 1rem; }
+        .cart-item { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #e8e8e8; align-items: center; }
+        .cart-item-img { width: 70px; height: 70px; object-fit: cover; border-radius: 12px; }
+        .cart-item-info { flex: 1; }
+        .cart-item-name { font-weight: 700; color: #1a1a2e; }
+        .cart-item-price { color: #e94560; font-weight: 700; margin-top: 0.2rem; }
+        .cart-item-controls { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; }
         .qty-btn { 
-            width: 30px; height: 30px; border-radius: 50%; border: 1px solid #ddd; 
-            background: white; cursor: pointer; font-size: 1rem; display: flex;
-            align-items: center; justify-content: center;
+            width: 30px; height: 30px; border-radius: 50%; border: 2px solid #e8e8e8; 
+            background: white; cursor: pointer; font-size: 1rem; font-weight: 700;
         }
-        .qty-btn:hover { background: #f0f0f0; }
-        .qty-value { font-weight: bold; min-width: 20px; text-align: center; }
-        .cart-item-total { font-weight: bold; font-size: 1rem; min-width: 80px; text-align: right; }
-        .remove-btn { 
-            background: none; border: none; cursor: pointer; padding: 0.3rem;
-        }
-        .remove-btn img { width: 20px; height: 20px; }
-        
-        .cart-empty { text-align: center; padding: 3rem; color: #999; }
-        .cart-empty img { width: 64px; height: 64px; opacity: 0.3; margin-bottom: 1rem; }
-        
-        .cart-summary { margin-top: 1.5rem; text-align: right; }
-        .cart-total { font-size: 1.3rem; font-weight: bold; margin-bottom: 1rem; }
+        .qty-value { font-weight: 700; min-width: 20px; text-align: center; }
+        .cart-item-total { font-weight: 700; font-size: 1rem; }
+        .remove-btn { background: none; border: none; cursor: pointer; font-size: 1.2rem; color: #c62828; }
+        .cart-summary { text-align: right; margin-top: 1.5rem; }
+        .cart-total { font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem; }
         .btn-checkout { 
-            background: #e94560; color: white; border: none; 
-            padding: 0.8rem 2rem; border-radius: 25px; cursor: pointer; 
-            font-size: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;
-            text-decoration: none;
+            background: #1a1a2e; color: white; padding: 0.8rem 2rem; border-radius: 30px;
+            text-decoration: none; font-weight: 700; display: inline-block;
         }
-        .btn-checkout img { width: 20px; height: 20px; }
-        .btn-checkout:hover { background: #c73e56; }
-
-        @media (max-width: 500px) {
-            .cart-item-img { width: 60px; height: 60px; }
-            .cart-item-name { font-size: 0.85rem; }
-            .cart-item-total { min-width: auto; }
-        }
+        .cart-empty { text-align: center; padding: 3rem; color: #999; }
     </style>
 </head>
 <body>
     <header class="header">
-        <div class="logo">
-            <a href="/"><img src="/static/icons/car.png" alt=""></a>
-            <a href="/">AutoChem</a>
-        </div>
+        <div class="logo"><a href="/">AUTO<span>CHEM</span></a></div>
         <div class="header-right">
             {% if session.user_id %}
-                                <a href="/account" class="header-btn"><img src="/static/icons/profile.png" alt=""> {{ session.username }}</a>
-                {% if session.username == 'admin' %}
-                    <a href="/admin" class="header-btn">⚙️ Админ</a>
-                {% endif %}
+                <a href="/account" class="header-btn">{{ session.username }}</a>
                 <a href="/logout" class="header-btn">Выйти</a>
             {% else %}
-                <a href="/login" class="header-btn"><img src="/static/icons/lock.png" alt=""> Войти</a>
-                <a href="/register" class="header-btn"><img src="/static/icons/user.png" alt=""> Регистрация</a>
+                <a href="/login" class="header-btn">Войти</a>
+                <a href="/register" class="header-btn">Регистрация</a>
             {% endif %}
         </div>
     </header>
 
     <div class="container">
         <a href="/catalog" class="back-link">← В каталог</a>
-        
         <div class="cart-container">
-            <h1><img src="/static/icons/cart.png" alt=""> Корзина</h1>
-            <div id="cart-items">
-                <div class="cart-empty">
-                    <img src="/static/icons/cart.png" alt="">
-                    <p>Корзина пуста</p>
-                    <a href="/catalog" style="color: #e94560; text-decoration: none;">Перейти в каталог</a>
-                </div>
-            </div>
+            <h1>🛒 Корзина</h1>
+            <div id="cart-items"><div class="cart-empty">Корзина пуста</div></div>
             <div class="cart-summary" id="cart-summary" style="display:none;">
                 <div class="cart-total">Итого: <span id="cart-total">0</span> ₽</div>
-                <a href="/checkout" class="btn-checkout" id="checkout-link">
-                    <img src="/static/icons/box.png" alt=""> Оформить заказ
-                </a>
+                <a href="/checkout" class="btn-checkout">Оформить заказ</a>
             </div>
         </div>
     </div>
 
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        
-        function saveCart() {
-            localStorage.setItem('cart', JSON.stringify(cart));
-            renderCart();
+        function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); renderCart(); }
+        function removeFromCart(id) { cart = cart.filter(i => i.id !== id); saveCart(); }
+        function changeQty(id, d) {
+            const item = cart.find(i => i.id === id);
+            if (item) { item.qty += d; if (item.qty <= 0) { removeFromCart(id); return; } saveCart(); }
         }
-        
-        function removeFromCart(id) {
-            cart = cart.filter(item => item.id !== id);
-            saveCart();
-        }
-        
-        function changeQty(id, delta) {
-            const item = cart.find(item => item.id === id);
-            if (item) {
-                item.qty += delta;
-                if (item.qty <= 0) { removeFromCart(id); return; }
-                saveCart();
-            }
-        }
-        
         function renderCart() {
-            const container = document.getElementById('cart-items');
-            const summary = document.getElementById('cart-summary');
-            const totalEl = document.getElementById('cart-total');
-            
-            if (cart.length === 0) {
-                container.innerHTML = '<div class="cart-empty"><img src="/static/icons/cart.png" alt=""><p>Корзина пуста</p><a href="/catalog" style="color: #e94560; text-decoration: none;">Перейти в каталог</a></div>';
-                summary.style.display = 'none';
-                return;
-            }
-            
-            summary.style.display = 'block';
+            const c = document.getElementById('cart-items');
+            const s = document.getElementById('cart-summary');
+            if (cart.length === 0) { c.innerHTML = '<div class="cart-empty">Корзина пуста</div>'; s.style.display = 'none'; return; }
+            s.style.display = 'block';
             let total = 0;
-            
-            container.innerHTML = cart.map(item => {
-                const itemTotal = item.price * item.qty;
-                total += itemTotal;
-                return `
-                    <div class="cart-item">
-                        <img src="/uploads/${item.image}" class="cart-item-img" alt="${item.name}">
-                        <div class="cart-item-info">
-                            <div class="cart-item-name">${item.name}</div>
-                            <div class="cart-item-price">${item.price} ₽ / шт</div>
-                            <div class="cart-item-controls">
-                                <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
-                                <span class="qty-value">${item.qty}</span>
-                                <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
-                            </div>
+            c.innerHTML = cart.map(i => {
+                const t = i.price * i.qty; total += t;
+                return `<div class="cart-item">
+                    <img src="/uploads/${i.image}" class="cart-item-img">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${i.name}</div>
+                        <div class="cart-item-price">${i.price} ₽ / шт</div>
+                        <div class="cart-item-controls">
+                            <button class="qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+                            <span class="qty-value">${i.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${i.id},1)">+</button>
                         </div>
-                        <div class="cart-item-total">${itemTotal.toLocaleString()} ₽</div>
-                        <button class="remove-btn" onclick="removeFromCart(${item.id})">
-                            <img src="/static/icons/trash.png" alt="Удалить">
-                        </button>
                     </div>
-                `;
+                    <div class="cart-item-total">${t.toLocaleString()} ₽</div>
+                    <button class="remove-btn" onclick="removeFromCart(${i.id})">🗑️</button>
+                </div>`;
             }).join('');
-            
-            totalEl.textContent = total.toLocaleString();
-            
-            // Обновляем ссылку оформления заказа
-            const link = document.getElementById('checkout-link');
-            link.href = '/checkout';
+            document.getElementById('cart-total').textContent = total.toLocaleString();
         }
-        
         renderCart();
     </script>
 </body>

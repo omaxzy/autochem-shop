@@ -434,12 +434,24 @@ def uploaded_file(filename):
 
 # ========== СОЗДАНИЕ АДМИНА ==========
 def create_admin():
-    # Проверяем и добавляем колонку is_manager, если её нет
+    # Проверяем и добавляем колонку is_manager
     try:
         User.query.filter_by(username='admin').first()
     except:
         db.session.execute(db.text('ALTER TABLE user ADD COLUMN is_manager BOOLEAN DEFAULT 0'))
         db.session.commit()
+    
+    # Проверяем и добавляем колонку instructions
+    try:
+        Product.query.first()
+        # Если запрос прошёл, пробуем добавить колонку
+        try:
+            db.session.execute(db.text('ALTER TABLE product ADD COLUMN instructions TEXT DEFAULT ""'))
+            db.session.commit()
+        except:
+            pass
+    except:
+        pass
     
     admin = User.query.filter_by(username='admin').first()
     if not admin:

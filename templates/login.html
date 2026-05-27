@@ -4,74 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход - AutoChem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            min-height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            padding: 1rem;
+            font-family: 'Nunito', sans-serif; background: #fafafa; 
+            min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem;
         }
         .auth-container { 
-            background: white; 
-            border-radius: 20px; 
-            padding: 2rem; 
-            max-width: 400px; 
-            width: 100%; 
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            text-align: center;
+            background: white; border-radius: 20px; padding: 2.5rem; 
+            max-width: 420px; width: 100%; border: 1px solid #e8e8e8;
         }
-        h1 { color: #1a1a2e; margin-bottom: 0.3rem; font-size: 1.5rem; }
-        .subtitle { color: #999; margin-bottom: 1.5rem; font-size: 0.85rem; }
-        .form-group { margin-bottom: 1rem; text-align: left; }
-        label { display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.85rem; }
+        h1 { font-size: 1.8rem; font-weight: 800; color: #1a1a2e; text-align: center; margin-bottom: 0.3rem; }
+        .subtitle { text-align: center; color: #999; margin-bottom: 2rem; font-size: 0.9rem; }
+        .form-group { margin-bottom: 1.2rem; }
+        label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; color: #333; }
         input { 
-            width: 100%; padding: 0.7rem; border: 2px solid #e0e0e0; 
-            border-radius: 8px; font-size: 0.9rem;
+            width: 100%; padding: 0.8rem 1rem; border: 2px solid #e8e8e8; 
+            border-radius: 12px; font-size: 0.9rem; font-family: 'Nunito', sans-serif;
         }
-        input:focus { outline: none; border-color: #667eea; }
+        input:focus { outline: none; border-color: #1a1a2e; }
         .btn-submit { 
-            background: #e94560; color: white; border: none; 
-            padding: 0.8rem; border-radius: 10px; font-size: 1rem; 
-            cursor: pointer; width: 100%; font-weight: 600;
+            background: #1a1a2e; color: white; border: none; padding: 0.9rem; 
+            border-radius: 30px; font-size: 0.95rem; font-weight: 700; cursor: pointer; width: 100%;
         }
-        .btn-submit:hover { background: #c73e56; }
-        .link { display: block; margin-top: 1rem; color: #667eea; text-decoration: none; font-size: 0.85rem; }
-        .flash { padding: 0.6rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.85rem; }
-        .flash.error { background: #f8d7da; color: #721c24; }
-        .flash.success { background: #d4edda; color: #155724; }
-        .back-link { display: block; margin-top: 0.5rem; color: #999; text-decoration: none; font-size: 0.85rem; }
+        .btn-submit:hover { background: #2a2a4e; }
+        .link { display: block; text-align: center; margin-top: 1.2rem; color: #999; text-decoration: none; font-size: 0.85rem; }
+        .link:hover { color: #333; }
+        .flash { padding: 0.7rem; border-radius: 10px; margin-bottom: 1rem; font-size: 0.85rem; text-align: center; }
+        .flash.error { background: #ffebee; color: #c62828; }
+        .flash.success { background: #e8f5e9; color: #2e7d32; }
     </style>
 </head>
 <body>
     <div class="auth-container">
-        <h1>🔐 Вход</h1>
+        <h1>Вход</h1>
         <p class="subtitle">Войдите в свой аккаунт</p>
-
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                {% for category, message in messages %}
-                    <div class="flash {{ category }}">{{ message }}</div>
-                {% endfor %}
+                {% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}
             {% endif %}
         {% endwith %}
-
         <form method="POST">
-            <div class="form-group">
-                <label>Логин</label>
-                <input type="text" name="username" required placeholder="Введите логин">
-            </div>
-            <div class="form-group">
-                <label>Пароль</label>
-                <input type="password" name="password" required placeholder="Введите пароль">
-            </div>
+            <div class="form-group"><label>Логин</label><input type="text" name="username" required></div>
+            <div class="form-group"><label>Пароль</label><input type="password" name="password" required></div>
             <button type="submit" class="btn-submit">Войти</button>
         </form>
         <a href="/register" class="link">Нет аккаунта? Зарегистрироваться</a>
-        <a href="/" class="back-link">← На главную</a>
+        <a href="/" class="link">← На главную</a>
     </div>
 </body>
 </html>

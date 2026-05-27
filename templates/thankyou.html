@@ -4,33 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Заказ оформлен - AutoChem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            font-family: 'Nunito', sans-serif; background: #fafafa; 
             min-height: 100vh; display: flex; align-items: center; justify-content: center; 
         }
         .card { 
             background: white; border-radius: 20px; padding: 3rem 2rem; 
-            max-width: 500px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px; text-align: center; border: 1px solid #e8e8e8;
         }
-        .card img { width: 80px; height: 80px; margin-bottom: 1rem; }
-        .card h1 { font-size: 1.8rem; color: #1a1a2e; margin-bottom: 0.5rem; }
-        .card p { color: #777; line-height: 1.6; margin-bottom: 1.5rem; }
+        .card .icon { font-size: 4rem; margin-bottom: 1rem; }
+        .card h1 { font-size: 1.8rem; font-weight: 800; color: #1a1a2e; margin-bottom: 0.5rem; }
+        .card p { color: #999; line-height: 1.6; margin-bottom: 1.5rem; }
         .btn { 
-            background: #e94560; color: white; padding: 0.8rem 2rem; 
-            border-radius: 25px; text-decoration: none; font-size: 1rem; 
-            display: inline-block; margin: 0.3rem;
+            background: #1a1a2e; color: white; padding: 0.8rem 2rem; 
+            border-radius: 30px; text-decoration: none; font-weight: 700; display: inline-block; margin: 0.3rem;
         }
-        .btn-outline { background: transparent; border: 2px solid #e94560; color: #e94560; }
+        .btn-outline { background: white; color: #1a1a2e; border: 2px solid #1a1a2e; }
     </style>
 </head>
 <body>
     <div class="card">
-        <img src="/static/icons/check.png" alt="">
+        <div class="icon">✅</div>
         <h1>Заказ оформлен!</h1>
-        <p>Спасибо за ваш заказ!<br>Мы свяжемся с вами в ближайшее время для подтверждения.</p>
+        <p>Спасибо за ваш заказ!<br>Мы свяжемся с вами в ближайшее время.</p>
         <a href="/catalog" class="btn">Продолжить покупки</a>
         <a href="/account" class="btn btn-outline">Мои заказы</a>
     </div>

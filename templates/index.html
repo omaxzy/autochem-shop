@@ -3,143 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoChem — Премиум автохимия</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>AutoChem — Автомобильная химия</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0a;
-            --surface: #141414;
-            --border: #222;
-            --gold: #c9a96e;
-            --gold-light: #d4b87a;
-            --text: #ccc;
-            --text-muted: #888;
+            --bg: #fafafa;
+            --surface: #fff;
+            --border: #e8e8e8;
+            --accent: #1a1a2e;
+            --text: #333;
+            --muted: #999;
             --white: #fff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: 'Inter', sans-serif; 
+            font-family: 'Nunito', sans-serif; 
             background: var(--bg); color: var(--text); min-height: 100vh;
-            line-height: 1.6;
+            line-height: 1.6; font-weight: 400;
         }
 
         .header { 
             display: flex; justify-content: space-between; align-items: center;
-            padding: 1.2rem 3rem; background: rgba(10,10,10,0.95);
-            border-bottom: 1px solid var(--border);
-            position: sticky; top: 0; z-index: 200; backdrop-filter: blur(10px);
+            padding: 1rem 3rem; background: var(--white); border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 200;
         }
         .logo { 
-            font-family: 'Playfair Display', serif; font-size: 1.6rem; 
-            font-weight: 700; color: var(--white); letter-spacing: 2px;
-            display: flex; align-items: center; gap: 0.5rem;
+            font-size: 1.5rem; font-weight: 800; color: var(--accent); 
+            letter-spacing: -0.5px;
         }
-        .logo span { color: var(--gold); }
+        .logo span { color: #e94560; }
         .header-right { display: flex; align-items: center; gap: 1rem; }
         .header-btn { 
             color: var(--text); text-decoration: none; padding: 0.5rem 1.2rem; 
-            border: 1px solid #333; border-radius: 4px;
-            font-size: 0.8rem; font-weight: 500; letter-spacing: 1px;
-            text-transform: uppercase; transition: all 0.3s;
+            border: 2px solid var(--border); border-radius: 30px;
+            font-size: 0.85rem; font-weight: 600; transition: all 0.3s;
         }
-        .header-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .header-btn:hover { border-color: var(--accent); background: var(--accent); color: white; }
         .cart-btn { 
-            position: relative; color: var(--white); text-decoration: none;
+            position: relative; color: var(--accent); text-decoration: none;
             width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
-            border: 1px solid #333; border-radius: 4px; transition: all 0.3s;
+            border: 2px solid var(--border); border-radius: 50%; transition: all 0.3s;
         }
-        .cart-btn:hover { border-color: var(--gold); }
+        .cart-btn:hover { border-color: var(--accent); }
         .cart-count { 
             position: absolute; top: -6px; right: -6px; 
-            background: var(--gold); color: #000; width: 18px; height: 18px; 
+            background: #e94560; color: white; width: 20px; height: 20px; 
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 0.6rem; font-weight: 700;
+            font-size: 0.65rem; font-weight: 800;
         }
 
         .hero { 
-            text-align: center; padding: 6rem 2rem;
-            background: linear-gradient(180deg, #0a0a0a 0%, #111 100%);
+            text-align: center; padding: 5rem 2rem; background: var(--white);
+            border-bottom: 1px solid var(--border);
         }
         .hero h1 { 
-            font-family: 'Playfair Display', serif; font-size: 3.5rem; 
-            color: var(--white); margin-bottom: 1rem; font-weight: 700;
+            font-size: 3rem; font-weight: 800; color: var(--accent); 
+            margin-bottom: 0.5rem; letter-spacing: -1px;
         }
-        .hero h1 span { color: var(--gold); }
         .hero p { 
-            font-size: 1.1rem; color: var(--text-muted); max-width: 500px; 
-            margin: 0 auto 2rem; font-weight: 300;
+            font-size: 1.1rem; color: var(--muted); max-width: 500px; 
+            margin: 0 auto 2rem; font-weight: 400;
         }
-        .btn-gold { 
-            background: var(--gold); color: #000; padding: 0.9rem 2.5rem; 
-            border: none; font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;
-            text-transform: uppercase; cursor: pointer; text-decoration: none;
-            display: inline-block; transition: all 0.3s;
+        .btn-primary { 
+            background: var(--accent); color: white; padding: 0.9rem 2.5rem; 
+            border-radius: 30px; text-decoration: none; font-size: 0.9rem;
+            font-weight: 700; display: inline-block; transition: all 0.3s;
         }
-        .btn-gold:hover { background: var(--gold-light); }
+        .btn-primary:hover { background: #2a2a4e; transform: translateY(-2px); }
 
         .section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
         .section-title { 
-            text-align: center; font-family: 'Playfair Display', serif; 
-            font-size: 2rem; color: var(--white); margin-bottom: 2.5rem;
+            text-align: center; font-size: 2rem; font-weight: 800; 
+            color: var(--accent); margin-bottom: 2.5rem; letter-spacing: -0.5px;
         }
-        .section-title span { color: var(--gold); }
 
         .features { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; }
         .feature { text-align: center; max-width: 250px; }
         .feature-icon { 
-            width: 60px; height: 60px; margin: 0 auto 1rem; 
-            border: 1px solid var(--gold); display: flex; align-items: center; 
-            justify-content: center; font-size: 1.5rem;
+            width: 70px; height: 70px; margin: 0 auto 1rem; 
+            background: var(--bg); border-radius: 50%; display: flex; 
+            align-items: center; justify-content: center; font-size: 1.8rem;
         }
-        .feature h3 { color: var(--white); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
-        .feature p { color: var(--text-muted); font-size: 0.8rem; font-weight: 300; }
-
-        .about { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .about p { color: var(--text-muted); text-align: center; max-width: 700px; margin: 0 auto; font-weight: 300; }
+        .feature h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .feature p { color: var(--muted); font-size: 0.85rem; font-weight: 400; }
 
         .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
         .news-card { 
-            background: var(--surface); border: 1px solid var(--border); 
-            padding: 2rem; transition: all 0.3s;
+            background: var(--white); border: 1px solid var(--border); 
+            border-radius: 16px; padding: 2rem; transition: all 0.3s;
         }
-        .news-card:hover { border-color: var(--gold); }
-        .news-card h3 { color: var(--white); font-size: 0.95rem; margin-bottom: 0.5rem; font-weight: 600; }
-        .news-card p { color: var(--text-muted); font-size: 0.8rem; font-weight: 300; line-height: 1.5; }
+        .news-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .news-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .news-card p { color: var(--muted); font-size: 0.85rem; line-height: 1.5; }
+
+        .about-block { 
+            background: var(--white); border: 1px solid var(--border); 
+            border-radius: 16px; padding: 2rem; max-width: 700px; margin: 0 auto;
+        }
+        .about-block p { margin-bottom: 0.8rem; color: var(--muted); }
+        .about-block strong { color: var(--text); }
 
         .delivery-list { list-style: none; max-width: 600px; margin: 0 auto; }
         .delivery-list li { 
             padding: 1rem 0; border-bottom: 1px solid var(--border); 
-            color: var(--text-muted); font-weight: 300; font-size: 0.9rem;
-            display: flex; gap: 0.8rem;
+            color: var(--muted); font-size: 0.9rem; display: flex; gap: 0.8rem;
         }
-        .delivery-list li strong { color: var(--white); min-width: 150px; font-weight: 500; }
-
-        .contacts-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 1.5rem; max-width: 700px; margin: 0 auto;
-        }
-        .contact-item { 
-            background: var(--surface); border: 1px solid var(--border); 
-            padding: 1.5rem; text-align: center;
-        }
-        .contact-item strong { color: var(--gold); display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem; }
-        .contact-item p { color: var(--text); font-size: 0.9rem; }
+        .delivery-list li strong { color: var(--text); min-width: 140px; font-weight: 600; }
 
         .footer { 
-            text-align: center; padding: 1.5rem; border-top: 1px solid var(--border);
-            color: var(--text-muted); font-size: 0.75rem; font-weight: 300;
+            text-align: center; padding: 1.5rem; background: var(--accent); 
+            color: rgba(255,255,255,0.6); font-size: 0.8rem; font-weight: 400;
         }
 
         .flash-messages { max-width: 800px; margin: 0 auto; }
-        .flash { padding: 0.6rem 1rem; margin: 0.5rem; font-size: 0.85rem; text-align: center; }
-        .flash.success { background: #1a3a1a; color: #8fbc8f; border: 1px solid #2a5a2a; }
-        .flash.error { background: #3a1a1a; color: #d4a0a0; border: 1px solid #5a2a2a; }
+        .flash { padding: 0.6rem 1rem; border-radius: 12px; margin: 0.5rem; font-size: 0.85rem; text-align: center; }
+        .flash.success { background: #e8f5e9; color: #2e7d32; }
+        .flash.error { background: #ffebee; color: #c62828; }
 
         @media (max-width: 700px) {
             .header { padding: 1rem; }
-            .hero h1 { font-size: 2.2rem; }
-            .hero { padding: 4rem 1rem; }
+            .hero h1 { font-size: 2rem; }
+            .hero { padding: 3rem 1rem; }
         }
     </style>
 </head>
@@ -156,7 +141,7 @@
                 <a href="/register" class="header-btn">Регистрация</a>
             {% endif %}
             <a href="/cart" class="cart-btn">
-                <span class="cart-count" id="cart-count">0</span>
+                🛒<span class="cart-count" id="cart-count">0</span>
             </a>
         </div>
     </header>
@@ -170,13 +155,13 @@
     {% endwith %}
 
     <section class="hero">
-        <h1>Премиум <span>автохимия</span></h1>
+        <h1>Автомобильная химия</h1>
         <p>Профессиональные средства для ухода за автомобилем — для тех, кто ценит качество.</p>
-        <a href="/catalog" class="btn-gold">Перейти в каталог</a>
+        <a href="/catalog" class="btn-primary">Перейти в каталог</a>
     </section>
 
     <section class="section">
-        <h2 class="section-title">Почему <span>мы</span></h2>
+        <h2 class="section-title">Почему мы</h2>
         <div class="features">
             <div class="feature"><div class="feature-icon">📦</div><h3>Доставка</h3><p>По указанному адресу в удобное время</p></div>
             <div class="feature"><div class="feature-icon">✓</div><h3>Качество</h3><p>Только сертифицированная продукция</p></div>
@@ -184,13 +169,8 @@
         </div>
     </section>
 
-    <section class="section about">
-        <h2 class="section-title">О <span>компании</span></h2>
-        <p>AutoChem — специализированный магазин уходовой автомобильной химии. Мы находимся в Красноярске и предлагаем профессиональные средства для детейлинга, которые действительно работают. Наша миссия — сделать качественную автохимию доступной.</p>
-    </section>
-
     <section class="section">
-        <h2 class="section-title">Новости и <span>советы</span></h2>
+        <h2 class="section-title">Новости и советы</h2>
         <div class="news-grid">
             <div class="news-card"><h3>Как выбрать полироль</h3><p>Абразивная или финишная? Разбираемся в видах полиролей для вашего автомобиля.</p></div>
             <div class="news-card"><h3>Топ-5 средств для салона</h3><p>Какие очистители работают лучше всего — наш рейтинг.</p></div>
@@ -199,23 +179,24 @@
     </section>
 
     <section class="section">
-        <h2 class="section-title">Доставка и <span>оплата</span></h2>
-        <ul class="delivery-list">
-            <li><strong> Курьером</strong> 1-3 рабочих дня, по тарифам службы</li>
-            <li><strong> Самовывоз</strong> г. Красноярск, ул. Караульная, 9г/2</li>
-            <li><strong> Почта России</strong> 5-14 рабочих дней для регионов</li>
-            <li><strong> Оплата</strong> Наличными, картой или переводом</li>
-        </ul>
+        <h2 class="section-title">О нас</h2>
+        <div class="about-block">
+            <p><strong>AutoChem</strong> — специализированный магазин уходовой автомобильной химии. Мы находимся в Красноярске и предлагаем профессиональные средства для детейлинга.</p>
+            <p><strong>📞 Телефон:</strong> +7 (993) 720-62-88</p>
+            <p><strong>📍 Адрес:</strong> г. Красноярск, ул. Караульная, 9г/2</p>
+            <p><strong>🕐 Режим работы:</strong> Ежедневно с 9:00 до 21:00</p>
+            <p><strong>📧 Email:</strong> info@autochem.ru</p>
+        </div>
     </section>
 
     <section class="section">
-        <h2 class="section-title">Контакты</h2>
-        <div class="contacts-grid">
-            <div class="contact-item"><strong>Телефон</strong><p>+7 (993) 720-62-88</p></div>
-            <div class="contact-item"><strong>Email</strong><p>info@autochem.ru</p></div>
-            <div class="contact-item"><strong>Режим работы</strong><p>Ежедневно 9:00–21:00</p></div>
-            <div class="contact-item"><strong>Адрес</strong><p>г. Красноярск, ул. Караульная, 9г/2</p></div>
-        </div>
+        <h2 class="section-title">Доставка и оплата</h2>
+        <ul class="delivery-list">
+            <li><strong>🚚 Курьером</strong> 1-3 рабочих дня</li>
+            <li><strong>🏠 Самовывоз</strong> г. Красноярск, ул. Караульная, 9г/2</li>
+            <li><strong>📦 Почта России</strong> 5-14 дней</li>
+            <li><strong>💳 Оплата</strong> Наличными, картой или переводом</li>
+        </ul>
     </section>
 
     <footer class="footer">

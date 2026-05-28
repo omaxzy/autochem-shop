@@ -1,52 +1,31 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация - AutoChem</title>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Регистрация - AutoChem</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Nunito', sans-serif; background: #fafafa; 
-            min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem;
-        }
-        .auth-container { 
-            background: white; border-radius: 20px; padding: 2.5rem; 
-            max-width: 420px; width: 100%; border: 1px solid #e8e8e8;
-        }
-        h1 { font-size: 1.8rem; font-weight: 800; color: #1a1a2e; text-align: center; margin-bottom: 0.3rem; }
+        body { font-family: 'Nunito', sans-serif; background: #0f0f0f; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+        .auth-container { background: #1a1a1a; border-radius: 20px; padding: 2.5rem; max-width: 420px; width: 100%; border: 1px solid #2a2a2a; }
+        h1 { font-size: 1.8rem; font-weight: 800; color: #fff; text-align: center; margin-bottom: 0.3rem; }
         .subtitle { text-align: center; color: #999; margin-bottom: 2rem; font-size: 0.9rem; }
         .form-group { margin-bottom: 1.2rem; }
-        label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; color: #333; }
-        input { 
-            width: 100%; padding: 0.8rem 1rem; border: 2px solid #e8e8e8; 
-            border-radius: 12px; font-size: 0.9rem; font-family: 'Nunito', sans-serif;
-        }
-        input:focus { outline: none; border-color: #1a1a2e; }
-        .btn-submit { 
-            background: #1a1a2e; color: white; border: none; padding: 0.9rem; 
-            border-radius: 30px; font-size: 0.95rem; font-weight: 700; cursor: pointer; width: 100%;
-        }
-        .btn-submit:hover { background: #2a2a4e; }
+        label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; color: #ddd; }
+        input { width: 100%; padding: 0.8rem 1rem; background: #0f0f0f; border: 1px solid #2a2a2a; border-radius: 12px; font-size: 0.9rem; font-family: 'Nunito', sans-serif; color: #ddd; }
+        input:focus { outline: none; border-color: #e94560; }
+        .btn-submit { background: #e94560; color: white; border: none; padding: 0.9rem; border-radius: 30px; font-size: 0.95rem; font-weight: 700; cursor: pointer; width: 100%; }
         .link { display: block; text-align: center; margin-top: 1.2rem; color: #999; text-decoration: none; font-size: 0.85rem; }
-        .link:hover { color: #333; }
         .flash { padding: 0.7rem; border-radius: 10px; margin-bottom: 1rem; font-size: 0.85rem; text-align: center; }
-        .flash.error { background: #ffebee; color: #c62828; }
+        .flash.error { background: #3a1a1a; color: #d4a0a0; border: 1px solid #5a2a2a; }
     </style>
 </head>
 <body>
     <div class="auth-container">
-        <h1>Регистрация</h1>
-        <p class="subtitle">Создайте аккаунт для заказов</p>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}
-            {% endif %}
-        {% endwith %}
+        <h1>Регистрация</h1><p class="subtitle">Создайте аккаунт</p>
+        {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endif %}{% endwith %}
         <form method="POST">
-            <div class="form-group"><label>Придумайте логин</label><input type="text" name="username" required></div>
-            <div class="form-group"><label>Придумайте пароль</label><input type="password" name="password" required></div>
+            <div class="form-group"><label>Логин</label><input type="text" name="username" required></div>
+            <div class="form-group"><label>Пароль</label><input type="password" name="password" required></div>
             <button type="submit" class="btn-submit">Зарегистрироваться</button>
         </form>
         <a href="/login" class="link">Уже есть аккаунт? Войти</a>

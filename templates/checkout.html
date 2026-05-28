@@ -6,27 +6,22 @@
     <title>Оформление заказа - AutoChem</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root { --bg: #0f0f0f; --surface: #1a1a1a; --border: #2a2a2a; --accent: #e94560; --text: #ddd; --muted: #999; --white: #fff; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Nunito', sans-serif; background: #fafafa; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; }
-        .container { background: white; border-radius: 20px; padding: 2rem; max-width: 500px; width: 100%; border: 1px solid #e8e8e8; }
-        h1 { font-weight: 800; color: #1a1a2e; text-align: center; margin-bottom: 0.3rem; }
-        .subtitle { text-align: center; color: #999; margin-bottom: 1.5rem; font-size: 0.9rem; }
-        .cart-summary { background: #fafafa; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; }
-        .cart-summary h3 { font-weight: 700; margin-bottom: 0.5rem; }
-        .cart-summary-item { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.2rem 0; }
-        .cart-summary-total { display: flex; justify-content: space-between; font-weight: 800; padding-top: 0.5rem; border-top: 1px solid #e8e8e8; margin-top: 0.3rem; }
+        body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+        .container { background: var(--surface); border-radius: 20px; padding: 2rem; max-width: 500px; width: 100%; border: 1px solid var(--border); }
+        h1 { font-weight: 800; color: var(--white); text-align: center; margin-bottom: 0.3rem; }
+        .subtitle { text-align: center; color: var(--muted); margin-bottom: 1.5rem; font-size: 0.9rem; }
+        .cart-summary { background: var(--bg); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; }
+        .cart-summary h3 { font-weight: 700; margin-bottom: 0.5rem; color: var(--white); }
+        .cart-summary-item { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.2rem 0; color: var(--muted); }
+        .cart-summary-total { display: flex; justify-content: space-between; font-weight: 800; padding-top: 0.5rem; border-top: 1px solid var(--border); margin-top: 0.3rem; color: var(--white); }
         .form-group { margin-bottom: 1rem; }
-        label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; }
-        input, textarea { 
-            width: 100%; padding: 0.8rem; border: 2px solid #e8e8e8; border-radius: 12px; 
-            font-size: 0.9rem; font-family: 'Nunito', sans-serif;
-        }
-        input:focus, textarea:focus { outline: none; border-color: #1a1a2e; }
-        .btn-submit { 
-            background: #1a1a2e; color: white; border: none; padding: 0.9rem; 
-            border-radius: 30px; font-size: 0.95rem; font-weight: 700; cursor: pointer; width: 100%;
-        }
-        .back-link { display: block; text-align: center; margin-top: 0.8rem; color: #999; text-decoration: none; font-size: 0.85rem; }
+        label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; color: var(--text); }
+        input, textarea { width: 100%; padding: 0.8rem; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; font-size: 0.9rem; font-family: 'Nunito', sans-serif; color: var(--text); }
+        input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+        .btn-submit { background: var(--accent); color: white; border: none; padding: 0.9rem; border-radius: 30px; font-size: 0.95rem; font-weight: 700; cursor: pointer; width: 100%; }
+        .back-link { display: block; text-align: center; margin-top: 0.8rem; color: var(--muted); text-decoration: none; font-size: 0.85rem; }
     </style>
 </head>
 <body>

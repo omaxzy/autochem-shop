@@ -1,66 +1,19 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Личный кабинет - AutoChem</title>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Личный кабинет - AutoChem</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Nunito', sans-serif; background: #fafafa; min-height: 100vh; }
-        .header { 
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 3rem; background: white; border-bottom: 1px solid #e8e8e8;
-        }
-        .header h1 { font-size: 1.5rem; font-weight: 800; color: #1a1a2e; }
-        .header a { color: #1a1a2e; text-decoration: none; font-weight: 600; font-size: 0.85rem; margin-left: 1rem; }
-        .header a:hover { opacity: 0.7; }
+        body { font-family: 'Nunito', sans-serif; background: #0f0f0f; color: #ddd; min-height: 100vh; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 3rem; background: #1a1a1a; border-bottom: 1px solid #2a2a2a; }
+        .header h1 { font-size: 1.5rem; font-weight: 800; color: #fff; }
+        .header a { color: #ddd; text-decoration: none; font-weight: 600; font-size: 0.85rem; margin-left: 1rem; }
         .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-        .card { background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid #e8e8e8; margin-bottom: 1.5rem; }
-        .card h2 { font-weight: 800; color: #1a1a2e; margin-bottom: 1rem; }
-        .order { border: 1px solid #e8e8e8; border-radius: 12px; padding: 1rem; margin-bottom: 0.8rem; }
+        .card { background: #1a1a1a; border-radius: 16px; padding: 1.5rem; border: 1px solid #2a2a2a; margin-bottom: 1.5rem; }
+        .card h2 { font-weight: 800; color: #fff; margin-bottom: 1rem; }
+        .order { border: 1px solid #2a2a2a; border-radius: 12px; padding: 1rem; margin-bottom: 0.8rem; }
         .order-header { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.5rem; }
-        .order-status { 
-            padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
-        }
-        .status-new { background: #fff3cd; color: #856404; }
-        .status-processing { background: #cce5ff; color: #004085; }
-        .status-done { background: #e8f5e9; color: #2e7d32; }
-        .order-items { font-size: 0.9rem; color: #666; margin-bottom: 0.3rem; }
-        .order-total { font-weight: 700; color: #1a1a2e; }
-        .no-orders { text-align: center; color: #999; padding: 2rem; }
-        .flash { padding: 0.7rem; border-radius: 10px; margin-bottom: 1rem; font-size: 0.85rem; }
-        .flash.success { background: #e8f5e9; color: #2e7d32; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>👤 {{ user.username }}</h1>
-        <div>
-            <a href="/">🏠 Магазин</a>
-            <a href="/logout">🚪 Выйти</a>
-        </div>
-    </div>
-    <div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endif %}
-        {% endwith %}
-        <div class="card">
-            <h2>📦 Мои заказы</h2>
-            {% if orders %}
-                {% for order in orders %}
-                <div class="order">
-                    <div class="order-header">
-                        <span>📅 {{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</span>
-                        <span class="order-status status-{% if order.status == 'Новый' %}new{% elif order.status == 'В обработке' %}processing{% else %}done{% endif %}">{{ order.status }}</span>
-                    </div>
-                    <div class="order-items">{{ order.items }}</div>
-                    <div class="order-total">{{ "%.0f"|format(order.total_price) }} ₽</div>
-                    <div style="font-size:0.8rem; color:#999; margin-top:0.3rem;">Адрес: {{ order.address }}</div>
-                </div>
-                {% endfor %}
-            {% else %}<p class="no-orders">У вас пока нет заказов</p>{% endif %}
-        </div>
-    </div>
-</body>
-</html>
+        .order-status { padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+        .status-new { background: #3a3a1a; color: #ffc107; } .status-processing { background: #1a2a3a; color: #64b5f6; } .status-done { background: #1a3a1a; color: #81c784; }
+        .order-items { font-size: 0.9rem; color: #999; } .order-total

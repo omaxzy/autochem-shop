@@ -6,30 +6,90 @@
     <title>{{ product.name }} - AutoChem</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0f0f0f; --surface: #1a1a1a; --border: #2a2a2a; --accent: #e94560; --text: #ddd; --muted: #999; --white: #fff; }
+        :root {
+            --bg: #0f0f0f; --surface: #1a1a1a; --border: #2a2a2a;
+            --accent: #e94560; --text: #ddd; --muted: #999; --white: #fff;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 3rem; background: var(--surface); border-bottom: 1px solid var(--border); }
+        
+        .header { 
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 3rem; background: var(--surface); border-bottom: 1px solid var(--border);
+        }
         .logo { font-size: 1.5rem; font-weight: 800; color: var(--white); }
         .logo a { color: var(--white); text-decoration: none; } .logo span { color: var(--accent); }
         .header-right { display: flex; align-items: center; gap: 1rem; }
-        .header-btn { color: var(--text); text-decoration: none; padding: 0.5rem 1.2rem; border: 1px solid var(--border); border-radius: 30px; font-size: 0.85rem; font-weight: 600; }
-        .cart-btn { position: relative; color: var(--white); text-decoration: none; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: 50%; }
-        .cart-count { position: absolute; top: -6px; right: -6px; background: var(--accent); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 800; }
-        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+        .header-btn { 
+            color: var(--text); text-decoration: none; padding: 0.5rem 1.2rem; 
+            border: 1px solid var(--border); border-radius: 30px; font-size: 0.85rem; font-weight: 600;
+        }
+        .cart-btn { 
+            position: relative; color: var(--white); text-decoration: none;
+            width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
+            border: 1px solid var(--border); border-radius: 50%;
+        }
+        .cart-count { 
+            position: absolute; top: -6px; right: -6px; 
+            background: var(--accent); color: white; width: 20px; height: 20px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 0.65rem; font-weight: 800;
+        }
+        
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
         .back-link { color: var(--muted); text-decoration: none; font-size: 0.85rem; display: inline-block; margin-bottom: 1.5rem; }
-        .product-detail { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-wrap: wrap; overflow: hidden; }
-        .product-image-large { width: 100%; max-width: 450px; height: 400px; object-fit: cover; }
-        .product-detail-info { flex: 1; padding: 2rem; min-width: 280px; }
+        
+        .product-detail { 
+            background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+            display: flex; flex-wrap: wrap; overflow: hidden; margin-bottom: 2rem;
+        }
+        .product-image-large { width: 100%; max-width: 500px; height: 450px; object-fit: cover; }
+        .product-detail-info { flex: 1; padding: 2rem; min-width: 280px; display: flex; flex-direction: column; }
         .product-detail-name { font-size: 1.8rem; font-weight: 800; color: var(--white); margin-bottom: 1rem; }
-        .product-detail-meta { display: flex; gap: 0.8rem; margin-bottom: 1.5rem; }
-        .product-detail-meta span { border: 1px solid var(--border); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; color: var(--muted); }
-        .product-detail-price { font-size: 2rem; font-weight: 800; color: var(--accent); margin-bottom: 1.5rem; }
-        .product-detail-description { color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
-        .btn-buy { background: var(--accent); color: white; border: none; padding: 0.9rem 2.5rem; border-radius: 30px; font-size: 0.9rem; font-weight: 700; cursor: pointer; }
-        .product-footer { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; margin-top: 1.5rem; }
-        .product-footer h2 { font-weight: 800; color: var(--white); margin-bottom: 1rem; }
-        @media (max-width: 700px) { .header { padding: 1rem; } .product-image-large { max-width: 100%; height: 280px; } }
+        .product-detail-meta { display: flex; gap: 0.8rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .product-detail-meta span { 
+            border: 1px solid var(--border); padding: 0.3rem 0.8rem; border-radius: 20px;
+            font-size: 0.8rem; color: var(--muted);
+        }
+        .product-detail-price { font-size: 2.2rem; font-weight: 800; color: var(--accent); margin-bottom: 1.5rem; }
+        .product-detail-description { color: var(--muted); line-height: 1.7; margin-bottom: auto; }
+        .btn-buy { 
+            background: var(--accent); color: white; border: none; 
+            padding: 1rem 3rem; border-radius: 30px; font-size: 1rem; font-weight: 700; 
+            cursor: pointer; transition: all 0.3s; margin-top: 1.5rem; align-self: flex-start;
+        }
+        .btn-buy:hover { background: #c73e56; transform: translateY(-2px); }
+        
+        /* Подвал с инструкцией */
+        .product-footer { 
+            background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+            padding: 2rem; margin-bottom: 2rem;
+        }
+        .product-footer h2 { font-weight: 800; color: var(--white); margin-bottom: 1.5rem; font-size: 1.3rem; }
+        .product-footer .instructions-text { color: var(--muted); line-height: 1.8; white-space: pre-line; }
+        .product-footer .contact-line { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+        
+        /* Похожие товары */
+        .related-section { margin-bottom: 3rem; }
+        .related-section h2 { font-weight: 800; color: var(--white); margin-bottom: 1.5rem; font-size: 1.3rem; }
+        .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+        .related-card { 
+            background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+            overflow: hidden; transition: all 0.3s; text-decoration: none;
+        }
+        .related-card:hover { border-color: var(--accent); }
+        .related-card img { width: 100%; height: 160px; object-fit: cover; }
+        .related-card .related-info { padding: 0.8rem; }
+        .related-card .related-name { font-weight: 700; color: var(--white); font-size: 0.9rem; margin-bottom: 0.3rem; }
+        .related-card .related-price { font-weight: 700; color: var(--accent); font-size: 0.85rem; }
+
+        @media (max-width: 700px) {
+            .header { padding: 1rem; }
+            .product-image-large { max-width: 100%; height: 300px; }
+            .product-detail-info { padding: 1.2rem; }
+            .product-detail-name { font-size: 1.3rem; }
+            .product-detail-price { font-size: 1.6rem; }
+        }
     </style>
 </head>
 <body>
@@ -41,31 +101,64 @@
                 {% if session.username == 'admin' %}<a href="/admin" class="header-btn">Админ</a>{% endif %}
                 <a href="/logout" class="header-btn">Выйти</a>
             {% else %}
-                <a href="/login" class="header-btn">Войти</a><a href="/register" class="header-btn">Регистрация</a>
+                <a href="/login" class="header-btn">Войти</a>
+                <a href="/register" class="header-btn">Регистрация</a>
             {% endif %}
             <a href="/cart" class="cart-btn">🛒<span class="cart-count" id="cart-count">0</span></a>
         </div>
     </header>
+
     <div class="container">
         <a href="/catalog" class="back-link">← В каталог</a>
+        
         <div class="product-detail">
-            <img src="{{ url_for('uploaded_file', filename=product.image) }}" class="product-image-large">
+            <img src="{{ url_for('uploaded_file', filename=product.image) }}" alt="{{ product.name }}" class="product-image-large">
             <div class="product-detail-info">
                 <h1 class="product-detail-name">{{ product.name }}</h1>
-                <div class="product-detail-meta"><span>{{ product.brand }}</span><span>{{ product.volume }}</span><span>{{ product.category }}</span></div>
+                <div class="product-detail-meta">
+                    <span>{{ product.brand }}</span>
+                    <span>{{ product.volume }}</span>
+                    <span>{{ product.category }}</span>
+                </div>
                 <div class="product-detail-price">{{ "%.0f"|format(product.price) }} ₽</div>
                 <p class="product-detail-description">{{ product.description }}</p>
-                <button class="btn-buy" onclick="addToCart({{ product.id }}, '{{ product.name }}', {{ product.price }}, '{{ product.image }}')">В корзину</button>
+                <button class="btn-buy" onclick="addToCart({{ product.id }}, '{{ product.name }}', {{ product.price }}, '{{ product.image }}')">🛒 В корзину</button>
             </div>
         </div>
+
         {% if product.instructions %}
-        <div class="product-footer"><h2>Инструкция</h2><div style="color:var(--muted); line-height:1.7; white-space:pre-line;">{{ product.instructions }}</div></div>
+        <div class="product-footer">
+            <h2>📋 Инструкция по применению</h2>
+            <div class="instructions-text">{{ product.instructions }}</div>
+            <div class="contact-line">Остались вопросы? 📞 +7 (993) 720-62-88 | 📧 info@autochem.ru</div>
+        </div>
         {% endif %}
+
+        <!-- Похожие товары -->
+        <div class="related-section">
+            <h2>🔥 Похожие товары</h2>
+            <div class="related-grid">
+                {% for p in related_products %}
+                <a href="/product/{{ p.id }}" class="related-card">
+                    <img src="{{ url_for('uploaded_file', filename=p.image) }}" alt="{{ p.name }}">
+                    <div class="related-info">
+                        <div class="related-name">{{ p.name }}</div>
+                        <div class="related-price">{{ "%.0f"|format(p.price) }} ₽</div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
     </div>
+
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); updateCartUI(); }
-        function addToCart(id, name, price, image) { const existing = cart.find(i => i.id === id); if (existing) existing.qty++; else cart.push({id, name, price, image, qty: 1}); saveCart(); }
+        function addToCart(id, name, price, image) {
+            const existing = cart.find(i => i.id === id);
+            if (existing) existing.qty++; else cart.push({id, name, price, image, qty: 1});
+            saveCart();
+        }
         function updateCartUI() { document.getElementById('cart-count').textContent = cart.reduce((s, i) => s + i.qty, 0); }
         updateCartUI();
     </script>
